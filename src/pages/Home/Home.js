@@ -1,5 +1,7 @@
 import React, {useEffect} from 'react';
+import Jumbotron from '../../components/shared/Jumbotron/Jumbotron.js';
 import Main from '../../Layout/Main.js';
+import Posts from './Posts/Posts.js';
 
 const Home = () => {
     useEffect(() => {
@@ -8,7 +10,8 @@ const Home = () => {
     
     return (
         <Main>
-        
+            <Jumbotron/>
+            <Posts/>
         </Main>
     );
 };

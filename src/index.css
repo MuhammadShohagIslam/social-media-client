@@ -62,7 +62,9 @@ footer {
 .text-justify {
     text-align: justify;
 }
-
+.spinner-color{
+  color: #D76826 !important;
+}
 .btn{
     color: #fff !important;
     background-color: #D76826 !important;
@@ -72,4 +74,33 @@ footer {
     color: #fff !important;
     background-color: transparent !important;
     border: 1px solid #D76826 !important;
+}
+.registerHeading{
+  color: #D76826;
+  font-size: 30px;
+  font-weight: 700;
+}
+.form-check-input:checked {
+  background-color: #D76826 !important;
+  border-color: #D76826 !important;
+}
+.form-check-input:focus {
+  border-color: #D76826 !important;
+  outline: 0;
+  box-shadow: 0 0 0 0.1rem #D76826 !important;
+}
+.form-control:focus {
+    color: #000 !important;
+    border-color: #D76826 !important;
+    outline: 0;
+    box-shadow: 0 0 0 0.1rem #D76826 !important;
+}
+.form-control {
+    border: 1px solid #D76826 !important;
+}
+.Typewriter__wrapper{
+    color: #D76826;
+}
+.Typewriter__cursor{
+    color: #D76826;
 }

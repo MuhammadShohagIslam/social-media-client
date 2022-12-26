@@ -6,7 +6,7 @@ import classes from "./NavBar.module.css";
 
 const NavBar = () => {
     const { user, logOut } = useAuth();
-    
+
     const handleLogOut = () => {
         logOut()
             .then()
@@ -25,7 +25,7 @@ const NavBar = () => {
                 <Container>
                     <LinkContainer to="/">
                         <Navbar.Brand className={classes.logo}>
-                            SohagCSM
+                            ShohagCSM
                         </Navbar.Brand>
                     </LinkContainer>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
