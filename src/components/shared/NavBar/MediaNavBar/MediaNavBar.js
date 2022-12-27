@@ -6,14 +6,16 @@ import {
     Tooltip,
     Figure,
     OverlayTrigger,
+    Form,
+    Button,
 } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { FaUserAlt } from "react-icons/fa";
 import { AiOutlineLogout } from "react-icons/ai";
-import { useAuth } from "../../../contexts/AuthProvider/AuthProvider";
-import classes from "./NavBar.module.css";
+import classes from "./MediaNavBar.module.css";
+import { useAuth } from "./../../../../contexts/AuthProvider/AuthProvider";
 
-const NavBar = () => {
+const MediaNavBar = () => {
     const { user, logOut } = useAuth();
 
     const handleLogOut = () => {
@@ -32,13 +34,24 @@ const NavBar = () => {
                 variant="dark"
             >
                 <Container>
-                    <LinkContainer to="/">
-                        <Navbar.Brand className={classes.logo}>
-                            ShohagCSM
-                        </Navbar.Brand>
-                    </LinkContainer>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
+                    <Navbar.Collapse
+                        id="basic-navbar-nav"
+                        className={classes.navbarWrapper}
+                    >
+                        <div className={`${classes.navbarFormWrapper}`}>
+                            <Form className={`${classes.navbarForm} d-flex`}>
+                                <Form.Control
+                                    type="search"
+                                    placeholder="Search"
+                                    className="me-2"
+                                    aria-label="Search"
+                                />
+                                <Button variant="outline-success">
+                                    Search
+                                </Button>
+                            </Form>
+                        </div>
                         <Nav
                             className={`${classes.centerNavbar} d-flex justify-content-lg-between align-items-lg-center`}
                         >
@@ -59,7 +72,7 @@ const NavBar = () => {
                                     </Nav.Link>
                                 </LinkContainer>
                             </div>
-                            <div className="d-lg-flex">
+                            <div className={`${classes.rightNavbar} d-lg-flex`}>
                                 {!user && !user?.uid ? (
                                     <>
                                         <LinkContainer to="/profile">
@@ -133,4 +146,4 @@ const NavBar = () => {
     );
 };
 
-export default NavBar;
+export default MediaNavBar;

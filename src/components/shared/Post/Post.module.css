@@ -1,0 +1,121 @@
+.cardWrapper{
+    transition: all .4s;
+    margin-bottom: 10px;
+}
+.cardWrapper:hover{
+    border: 1px solid #D76826 !important;
+}
+.cardHeaderWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all .4s;
+    background-color: transparent !important;
+    border-bottom: none !important;
+}
+.cardHeaderImg{
+    width: 40px;
+    height: 40px;
+}
+.cardHeaderName{
+    font-size: 15px;
+    font-weight: 600;
+    color: #000;
+    line-height: 1;
+    margin-bottom: 1px;
+}
+.cardHeaderPostCreatedAt{
+    font-size: 13px;
+    font-weight: 600;
+    color: rgb(101, 103, 107);
+    line-height: 1;
+    margin-bottom: 0;
+}
+.cardContentDetails{
+    color: #D76826 !important;
+    cursor: pointer;
+}
+.cardImageWrapper{
+    border-top: 1px solid rgba(0, 0, 0, 0.175);
+}
+.cardFooterWrapper{
+    background-color: transparent !important;
+}
+.cardFooterTopWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all .4s;
+    margin: 10px 10px !important;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.175);
+    color: rgb(101, 103, 107);
+}
+.cardFooterIconWrapper{
+    cursor: pointer;
+}
+.cardFooterLikedIcon{
+    color: #D76826;
+    margin-right: 4px;
+    font-size: 19px;
+    margin-top: -2px;
+}
+.cardFooterCounterCommentShared{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.cardFooterCounterComment{
+    cursor: pointer;
+    color: rgb(101, 103, 107);
+    font-size: 15px;
+    margin-bottom: 0;
+    margin-right: 10px;
+    border-bottom: 1px solid transparent;
+}
+.cardFooterCounterComment:hover{
+    border-bottom: 1px solid rgb(101, 103, 107);
+}
+.cardFooterCounterShared{
+    cursor: pointer;
+    color: rgb(101, 103, 107);
+    font-size: 15px;
+    margin-bottom: 0;
+    border-bottom: 1px solid transparent;
+}
+.cardFooterCounterShared:hover{
+    border-bottom: 1px solid rgb(101, 103, 107);
+}
+
+.cardFooterBottomWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all .4s;
+    padding: 10px 35px !important;
+    color: rgb(101, 103, 107);
+    font-weight: 600;
+}
+.cardFooterBottomLikedIcon{
+    color: #D76826;
+    margin-right: 4px;
+    font-size: 19px;
+    margin-top: -4px;
+    font-weight: 600;
+}
+.cardFooterBottomCommentIcon{
+    color: #D76826;
+    margin-right: 4px;
+    font-size: 16px;
+    margin-top: -2px;
+    font-weight: 600;
+}
+.cardFooterBottomSharedIcon{
+    color: #D76826;
+    margin-right: 4px;
+    font-size: 19px;
+    margin-top: -4px;
+    font-weight: 600;
+}
+
+

@@ -3,8 +3,8 @@ import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
-import Main from "../../Layout/Main";
 import { useAuth } from "../../contexts/AuthProvider/AuthProvider";
+import Main from "../../Layout/Main/Main";
 
 const Registration = () => {
     const [isFetching, setIsFetching] = useState(true);

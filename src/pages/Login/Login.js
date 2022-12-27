@@ -5,8 +5,8 @@ import { Helmet } from "react-helmet-async";
 import { toast } from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import Main from "../../Layout/Main";
 import { useAuth } from "../../contexts/AuthProvider/AuthProvider";
+import Main from "../../Layout/Main/Main";
 
 const Login = () => {
     const [isFetching, setIsFetching] = useState(true);

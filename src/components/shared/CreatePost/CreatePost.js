@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import classes from "./CreatePost.module.css";
 import { FaImage } from "react-icons/fa";
-import { AiOutlineClose } from "react-icons/ai";
 const CreatePost = ({ setPostContent, handlePostSubmit }) => {
     const postImageRef = useRef();
     const [postImages, setPostImages] = useState(null);
@@ -28,9 +27,9 @@ const CreatePost = ({ setPostContent, handlePostSubmit }) => {
                 />
             </Form.Group>
             {postImages && (
-                <div className={classes.previewPostImage}>
-                    <AiOutlineClose onClick={() => setPostImages(null)} />
-                    <img src={postImages.postImage} alt="" />
+                <div className={classes.previewPostImageWrapper}>
+                    <span className={classes.previewPostCrossIcon} onClick={() => setPostImages(null)} >X</span>
+                    <img className={classes.previewPostImage} src={postImages.postImage} alt="" />
                 </div>
             )}
             <div className={classes.uploadPhotoWrapper}>
@@ -51,7 +50,7 @@ const CreatePost = ({ setPostContent, handlePostSubmit }) => {
                 </div>
             </div>
             <Button
-                className={`${classes.modalReviewButton} btn`}
+                className={`${classes.postCreatedButton} btn`}
                 variant="primary"
                 type="submit"
                 onClick={(e) => handlePostSubmit(e)}

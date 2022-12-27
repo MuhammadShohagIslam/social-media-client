@@ -1,28 +1,62 @@
-.uploadPhotoWrapper{
+.uploadPhotoWrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid #D76826;
+    border: 1px solid #d76826;
     padding: 14px 14px;
     border-radius: 6px;
 }
-.uploadTitle{
+.uploadTitle {
     font-size: 16px;
     line-height: 1;
     margin-bottom: 0px !important;
 }
-.uploadPhotoIcon{
-    color: #D76826;
+.uploadPhotoIcon {
+    color: #d76826;
     font-size: 19px;
     margin-right: 3px;
     margin-top: -1px;
     cursor: pointer;
 }
-.uploadPhotoIconTitle{
+.uploadPhotoIconTitle {
     color: #000;
     font-weight: 600;
     cursor: pointer;
 }
-.previewPostImage{
-    
+.previewPostImageWrapper {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 5px;
 }
+.previewPostCrossIcon{
+    position: absolute;
+    font-size: 22px;
+    color: #fff;
+    right: 7px;
+    top: 0;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    background: #d76726b9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .3s;
+}
+.previewPostCrossIcon:hover{
+    background: #d76826;
+}
+.previewPostImage {
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+}
+.postCreatedButton {
+    margin-top: 10px;
+}
+.postCreatedButton:hover {
+    color: #000 !important;
+}
+

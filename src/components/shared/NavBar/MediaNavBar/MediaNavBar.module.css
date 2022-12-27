@@ -1,0 +1,103 @@
+.navBar {
+    padding: 12px 0px !important;
+}
+.navbarWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.logOutIcon{
+    font-size: 22px !important;
+}
+.navbarFormWrapper{
+    width: 40%;
+}
+.navbarForm{
+    width: 70%;
+}
+.centerNavbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 60%;
+}
+.navLink {
+    font-size: 20px !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    transition: all 0.4s;
+}
+.navLink:hover {
+    color: #D76826 !important;
+}
+.navItemMiddle {
+    display: flex;
+}
+
+@media only screen and (max-width: 767px) {
+    .navbarWrapper{
+        display: block; 
+    }
+    .navbarFormWrapper{
+        width: 100%;
+    }
+    .navbarForm{
+        width: 100%;
+    }
+    .centerNavbar{
+        width: 100%;
+        text-align: start;
+    }
+    .navLink {
+        font-size: 18px !important;
+    }
+    .navItemMiddle {
+        display: block;
+        width: 100%;
+        text-align: start;
+    }
+    .centerNavbar {
+        margin-left: 2%;
+    }
+    .rightNavbar{
+        width: 100%;
+        text-align: start;  
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .navbarWrapper{
+        display: block; 
+    }
+    .navbarFormWrapper{
+        width: 100%;
+    }
+    .navbarForm{
+        width: 100%;
+    }
+    .centerNavbar{
+        width: 100%;
+        text-align: start;
+    }
+    .navLink {
+        font-size: 18px !important;
+    }
+    .navItemMiddle {
+        display: block;
+        width: 100%;
+        text-align: start;
+    }
+    .rightNavbar{
+        width: 100%;
+        text-align: start;  
+    }
+    .centerNavbar {
+        margin-left: 2%;
+    }
+}
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+    .centerNavbar {
+        margin-left: 11%;
+    }
+}

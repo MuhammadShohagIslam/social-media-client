@@ -1,0 +1,24 @@
+.leftSideListWrapper{
+    padding: 0px 0px 0px 30px;
+}
+.leftSideProfileImg{
+    width: 32px;
+    height: 32px;
+}
+.leftSideListItemWrapper{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 19px;
+}
+.leftSideProfileIcon{
+    font-size: 32px;
+    color: #d76826;
+}
+.leftSideListItemTitle{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 0;
+    margin-left: 9px;
+}

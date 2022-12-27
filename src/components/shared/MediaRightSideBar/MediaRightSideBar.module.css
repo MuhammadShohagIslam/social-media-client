@@ -1,0 +1,28 @@
+.rightSideListWrapper{
+    padding: 0px 0px 0px 30px;
+}
+.rightSideTitle{
+    color: rgb(101, 103, 107);
+    margin-bottom: 16px;
+}
+.rightSideProfileImg{
+    width: 32px;
+    height: 32px;
+}
+.rightSideListItemWrapper{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 19px;
+}
+.rightSideProfileIcon{
+    font-size: 32px;
+    color: #d76826;
+}
+.rightSideListItemTitle{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 0;
+    margin-left: 9px;
+}

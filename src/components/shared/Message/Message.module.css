@@ -1,0 +1,41 @@
+.cardWrapper{
+    transition: all .4s;
+    margin-bottom: 10px;
+}
+.cardWrapper:hover{
+    border: 1px solid #D76826 !important;
+}
+.cardHeaderWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all .4s;
+    background-color: transparent !important;
+    border-bottom: none !important;
+}
+.cardHeaderImg{
+    width: 40px;
+    height: 40px;
+}
+.cardHeaderName{
+    font-size: 15px;
+    font-weight: 600;
+    color: #000;
+    line-height: 1;
+    margin-bottom: 1px;
+}
+.cardHeaderPostCreatedAt{
+    font-size: 13px;
+    font-weight: 600;
+    color: rgb(101, 103, 107);
+    line-height: 1;
+    margin-bottom: 0;
+}
+.cardContentDetails{
+    color: #D76826 !important;
+    cursor: pointer;
+}
+.cardImageWrapper{
+    border-top: 1px solid rgba(0, 0, 0, 0.175);
+}
+

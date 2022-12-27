@@ -1,0 +1,5 @@
+.mainMessageLayout{
+    display: grid;
+    grid-template-columns: 500px auto 500px;
+    margin-top: 25px;
+}

@@ -16,6 +16,9 @@
     font-weight: 600 !important;
     transition: all 0.4s;
 }
+.logOutIcon{
+    font-size: 22px !important;
+}
 .navLink:hover {
     color: #D76826 !important;
 }

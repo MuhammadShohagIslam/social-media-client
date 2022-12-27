@@ -1,0 +1,5 @@
+.mainLayout{
+    display: grid;
+    grid-template-columns: 400px auto 400px;
+    margin-top: 25px;
+}
