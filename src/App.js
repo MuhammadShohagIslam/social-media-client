@@ -5,6 +5,7 @@ import PostDetails from "./pages/Home/Posts/PostDetails/PostDetails";
 import Login from "./pages/Login/Login";
 import Media from "./pages/Media/Media";
 import Messages from "./pages/Messages/Messages";
+import Profile from "./pages/Profile/Profile";
 import Registration from "./pages/Registration/Registration";
 
 
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/media" element={<Media />} />
                 <Route path="/posts/:postId" element={<PostDetails />} />
                 <Route path="/message" element={<Messages />} />
+                <Route path="/profile" element={<Profile />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Registration />} />
             </Routes>

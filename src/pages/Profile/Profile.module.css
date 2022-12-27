@@ -1,0 +1,29 @@
+.profileWrapper{
+    display: grid;
+    grid-template-columns: 400px auto;
+    padding-top: 0px;
+    height: 100vh;
+}
+.profileLeftWrapper{
+    background-color: #000 !important;
+}
+.profileInformationWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+.profileInformationTitle{
+    color: #000;
+    font-size: 30px;
+    font-weight: 600;
+    text-align: start;
+    width: 50%;
+}
+.profileInformationIconWrapper{
+    color: #000;
+    font-size: 30px;
+    font-weight: 600;
+    text-align: start;
+    width: 40%;
+    cursor: pointer;
+}
