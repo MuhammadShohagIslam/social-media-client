@@ -3,37 +3,26 @@ import { Card, Image } from "react-bootstrap";
 import classes from "./Comment.module.css";
 
 const Comment = ({ comment }) => {
-    const { name, message, img, commentAt } = comment;
+    // const { name, message, img, commentAt } = comment;
     return (
-        <Card className="mb-3">
-            <Card.Body>
-                <div className={classes.commentCardWrapper}>
+        <Card className={`${classes.commentCardWrapper}`}>
+            <Card.Body className={classes.commentCardBodyWrapper}>
+                <div>
                     <Image
                         roundedCircle
+                        src="holder.js/100px180"
                         className={classes.commentImg}
-                        src={img ? img : ""}
-                        alt={name}
                     />
                 </div>
-                <div>
-                    <div>
-                        <Card.Title className="pt-2">{name}Name</Card.Title>
-                        <Card.Text className="pb-2">{message}SDFSFSFSFSFSFS</Card.Text>
+                <div className="ms-4">
+                    <div className={classes.commentCardBodyProfileInfoWrapper}>
+                        <Card.Title className="h6">Name</Card.Title>
+                        <p className="pb-2 mb-0">SDFSFSFSFSFSFS</p>
                     </div>
-                    <div>
-                        <div>
-                            Like
-                        </div>
-                        <div>
-                            Replay
-                        </div>
-                        <div>
-                            <Card.Subtitle className="mb-2 text-muted">
-                                {new Date(commentAt)
-                                    .toString()
-                                    .substring(4, 16)}
-                            </Card.Subtitle>
-                        </div>
+                    <div className={classes.commentCardBodyBottomWrapper}>
+                        <div className="me-2">Like</div>
+                        <div className="me-2">Replay</div>
+                        <div>{new Date().toString().substring(4, 16)}</div>
                     </div>
                 </div>
             </Card.Body>

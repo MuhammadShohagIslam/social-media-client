@@ -1,0 +1,23 @@
+.commentCardWrapper{
+    width: 100%;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.175);
+}
+.commentCardBodyWrapper{
+    display: flex;
+    justify-content: start;
+}
+.commentImg{
+    width: 32px;
+    height: 32px;
+}
+.commentCardBodyProfileInfoWrapper{
+
+}
+.commentCardBodyBottomWrapper{
+    display: flex;
+    justify-content: space-between;
+}
