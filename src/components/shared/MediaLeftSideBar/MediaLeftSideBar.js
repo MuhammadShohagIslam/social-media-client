@@ -8,7 +8,7 @@ import classes from "./MediaLeftSideBar.module.css";
 
 const MediaLeftSideBar = () => {
     return (
-        <ul className={classes.leftSideListWrapper}>
+        <ul className={`${classes.leftSideListWrapper} pt-4`}>
             <li className={classes.leftSideListItemWrapper}>
                 <Image
                     className={classes.leftSideProfileImg}

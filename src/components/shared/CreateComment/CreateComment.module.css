@@ -63,3 +63,31 @@
 .postCreatedButton:hover {
     color: #000 !important;
 }
+
+@media only screen and (max-width: 767px) {
+    .commentPostWrapperForm{
+        width: 90%;
+        margin: 0 auto;
+    }
+    .uploadPhotoWrapper {
+        padding: 6px 13px;
+    }
+    .uploadTitle {
+        font-size: 13px;
+    }
+    .uploadPhotoIcon {
+        font-size: 17px;
+        margin-top: -1px;
+    }
+    .uploadPhotoIconTitle {
+        font-size: 15px;
+    }
+   
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+   
+}
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  
+}

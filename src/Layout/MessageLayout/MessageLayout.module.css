@@ -1,5 +1,47 @@
 .mainMessageLayout{
     display: grid;
     grid-template-columns: 500px auto 500px;
-    margin-top: 25px;
+}
+.bottomSideBarShowWrapper{
+    position: absolute;
+    font-size: 20px;
+    color: #fff;
+    right: 87px;
+    top: 22px;
+    cursor: pointer;
+    width: 36px;
+    height: 35px;
+    background: #d76826;
+    border-radius: 50%;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    transition: all .3s;
+}
+
+@media only screen and (max-width: 767px) {
+    .mainMessageLayout{
+        display: block;
+        grid-template-columns: 1fr;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .mainMessageLayout{
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .bottomSideBarShowWrapper{
+        right: 110px;
+        top: 22px;
+    }
+}
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+    .mainMessageLayout{
+        display: grid;
+        grid-template-columns: 300px auto 300px;
+    }
+    .previewPostImageWrapper{
+        display: none;
+    }
 }
