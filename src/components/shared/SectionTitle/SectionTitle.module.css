@@ -37,18 +37,26 @@
     margin: 15px auto 0;
     max-width: 545px;
 }
+/* Start Small Devices */
+@media only screen and (max-width: 767px) {
+    .sectionWrapper {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .sectionTitle {
+        font-size: 21px;
+    }
+} /* End Small Devices */
+
 /* Start Medium Devices */
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .sectionWrapper {
         text-align: center;
         margin-bottom: 30px;
     }
+    .sectionTitle {
+        font-size: 25px;
+    }
 } /* End Medium Devices */
 
-/* Start Small Devices */
-@media only screen and (max-width: 767px) {
-    .sectionWrapper {
-        text-align: center;
-        margin-bottom: 24px;
-    }
-} /* End Small Devices */
+

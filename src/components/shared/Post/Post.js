@@ -51,19 +51,19 @@ const Post = () => {
                     </div>
                 </div>
                 <div className={classes.cardFooterBottomWrapper}>
-                    <div className={classes.cardFooterIconWrapper}>
+                    <div className={classes.cardFooterBottomIconWrapper}>
                         <AiFillLike
                             className={classes.cardFooterBottomLikedIcon}
                         />
                         Like
                     </div>
-                    <div className={classes.cardFooterIconWrapper}>
+                    <div className={classes.cardFooterBottomIconWrapper}>
                         <FaCommentAlt
                             className={classes.cardFooterBottomCommentIcon}
                         />
                         Comment
                     </div>
-                    <div className={classes.cardFooterIconWrapper}>
+                    <div className={classes.cardFooterBottomIconWrapper}>
                         <IoIosShareAlt
                             className={classes.cardFooterBottomSharedIcon}
                         />

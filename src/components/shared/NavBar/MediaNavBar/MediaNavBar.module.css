@@ -1,11 +1,17 @@
 .navBar {
-    padding: 12px 0px !important;
+    padding: 12px 0px 12px !important;
 }
 .navbarWrapper{
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
+}
+.mediaLayoutLogo{
+    display: none;
+    font-size: 28px !important;
+    color: #D76826 !important;
+    font-weight: 700 !important;
 }
 .logOutIcon{
     font-size: 22px !important;
@@ -38,6 +44,14 @@
 @media only screen and (max-width: 767px) {
     .navbarWrapper{
         display: block; 
+        position: relative;
+        top: 13px;
+    }
+    .mediaLayoutLogo{
+        display: block;
+        font-size: 28px !important;
+        color: #D76826 !important;
+        font-weight: 700 !important;
     }
     .navbarFormWrapper{
         width: 100%;
@@ -63,12 +77,21 @@
     .rightNavbar{
         width: 100%;
         text-align: start;  
+        padding-bottom: 17px;
     }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .navbarWrapper{
-        display: block; 
+        display: block;
+        position: relative;
+        top: 13px;
+    }
+    .mediaLayoutLogo{
+        display: block;
+        font-size: 28px !important;
+        color: #D76826 !important;
+        font-weight: 700 !important;
     }
     .navbarFormWrapper{
         width: 100%;
@@ -91,6 +114,7 @@
     .rightNavbar{
         width: 100%;
         text-align: start;  
+        padding-bottom: 17px;
     }
     .centerNavbar {
         margin-left: 2%;

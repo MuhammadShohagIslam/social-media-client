@@ -34,6 +34,11 @@ const MediaNavBar = () => {
                 variant="dark"
             >
                 <Container>
+                    <LinkContainer className={classes.mediaLayoutLogo} to="/">
+                        <Navbar.Brand className={classes.logo}>
+                            ShohagCSM
+                        </Navbar.Brand>
+                    </LinkContainer>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse
                         id="basic-navbar-nav"

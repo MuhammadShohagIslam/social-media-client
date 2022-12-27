@@ -32,7 +32,7 @@ const NavBar = () => {
                 variant="dark"
             >
                 <Container>
-                    <LinkContainer to="/">
+                    <LinkContainer  to="/">
                         <Navbar.Brand className={classes.logo}>
                             ShohagCSM
                         </Navbar.Brand>

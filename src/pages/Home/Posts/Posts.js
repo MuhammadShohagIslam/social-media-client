@@ -3,12 +3,12 @@ import { Container, Row, Col } from "react-bootstrap";
 import CreatePost from "../../../components/shared/CreatePost/CreatePost";
 import SectionTitle from "../../../components/shared/SectionTitle/SectionTitle";
 import Post from "./../../../components/shared/Post/Post";
-
+import classes from './Posts.module.css'
 const Posts = () => {
     return (
         <>
-            <section>
-                <Container className="my-5">
+            <section className={classes.postWrapper}>
+                <Container>
                     <SectionTitle
                         title="Create New Post"
                         info="Shared Your Idea/Knowledged With Post"
@@ -28,7 +28,7 @@ const Posts = () => {
                     />
                     <Row>
                         <Col>
-                            <Col md={{ span: 6, offset: 3 }}>
+                            <Col lg={{ span: 6, offset: 3 }}>
                                 <Post />
                                 <Post />
                                 <Post />

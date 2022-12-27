@@ -52,11 +52,12 @@
         height: 200px;
     }
     .jumbotronName {
-        font-size: 21px !important;
+        font-size: 20px !important;
         margin-bottom: 10px;
     }
     .jumbotronTitle {
         width: 253px;
+        font-size: 17px;
     }
 } /* End Small Devices */
 
