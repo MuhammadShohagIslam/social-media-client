@@ -1,16 +1,26 @@
-import React from "react";
-import { Form, Button, Container, Col, Row, Figure } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Form, Container, Col, Row, Figure } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthProvider/AuthProvider";
 import { toast } from "react-hot-toast";
 import { FaUserAlt } from "react-icons/fa";
 import { BiEdit } from "react-icons/bi";
 import Main from "./../../Layout/Main/Main";
 import classes from "./Profile.module.css";
+import ProfileEditModal from "../../components/shared/ProfileEditModal/ProfileEditModal";
 
 const Profile = () => {
     const { user, setLoading, userProfileUpdate } = useAuth();
+    const [showModal, setShowModal] = useState(false);
 
-    const handleUserProfileUpdate = (event) => {
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, []);
+
+    const handleShowModal = () => {
+        setShowModal((prev) => !prev);
+    };
+
+    const handleSubmit = (event) => {
         event.preventDefault();
         const form = event.target;
         const fullName = form.fullName.value;
@@ -67,15 +77,20 @@ const Profile = () => {
                             <h2 className={classes.profileInformationTitle}>
                                 Profile Information
                             </h2>
-                            <div className={classes.profileInformationIconWrapper}>
+                            <div
+                                className={
+                                    classes.profileInformationIconWrapper
+                                }
+                            >
                                 <BiEdit
+                                    onClick={() => handleShowModal()}
                                     className={classes.profileInformationIcon}
                                 />
                             </div>
                         </div>
                         <Row>
                             <Col lg={7}>
-                                <Form onSubmit={handleUserProfileUpdate}>
+                                <Form>
                                     <Form.Group
                                         className="mb-3"
                                         controlId="formBasicEmail"
@@ -109,33 +124,44 @@ const Profile = () => {
 
                                     <Form.Group
                                         className="mb-3"
-                                        controlId="formBasicEmail"
+                                        controlId="formBasicAddress"
                                     >
                                         <Form.Label className="text-black">
-                                            PhotoURL
+                                            Address
                                         </Form.Label>
                                         <Form.Control
                                             type="text"
+                                            name="address"
                                             disabled
-                                            name="photoURL"
-                                            defaultValue={user?.photoURL}
-                                            placeholder="Enter PhotoURL"
+                                            placeholder="Enter Your Address"
                                         />
                                     </Form.Group>
-
-                                    <Button
-                                        size="lg"
-                                        className="text-white border border-white"
-                                        variant="outline-dark"
-                                        type="submit"
+                                    <Form.Group
+                                        className="mb-3"
+                                        controlId="formBasicUniversity"
                                     >
-                                        Save
-                                    </Button>
+                                        <Form.Label className="text-black">
+                                            University
+                                        </Form.Label>
+                                        <Form.Control
+                                            disabled
+                                            type="text"
+                                            name="university"
+                                            placeholder="Enter Your University"
+                                        />
+                                    </Form.Group>
                                 </Form>
                             </Col>
                         </Row>
                     </Container>
                 </div>
+                <ProfileEditModal
+                    showModal={showModal}
+                    setShowModal={setShowModal}
+                    handleShowModal={handleShowModal}
+                    handleSubmit={handleSubmit}
+                    modalName="Profile Information Update"
+                />
             </div>
         </Main>
     );
