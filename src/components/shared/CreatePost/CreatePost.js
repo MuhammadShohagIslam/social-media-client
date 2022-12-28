@@ -17,7 +17,7 @@ const CreatePost = ({ handlePostSubmit, loading, user }) => {
     };
 
     return (
-        <Form onSubmit={handlePostSubmit}>
+        <Form onSubmit={(e) => handlePostSubmit(e, setPostImages)}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Control
                     as="textarea"

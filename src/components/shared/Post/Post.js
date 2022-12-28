@@ -17,7 +17,7 @@ import { useAuth } from "./../../../contexts/AuthProvider/AuthProvider";
 import { likeThePost, removedLikedPost } from "../../../api/likePosts";
 import { toast } from "react-hot-toast";
 
-const Post = ({ post, allLikedPosts, refetch }) => {
+const Post = ({ post, allLikedPosts, refetch, allComments }) => {
     const { user } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -76,6 +76,11 @@ const Post = ({ post, allLikedPosts, refetch }) => {
                 likedPost.likedUserName === user?.displayName
         );
 
+    // functionality about comment of the post
+    const commentArrayByPostId =
+        allComments && allComments.filter((comment) => comment.postId === _id);
+
+    console.log(commentArrayByPostId);
     return (
         <Container>
             <Card className={classes.cardWrapper}>
@@ -124,11 +129,12 @@ const Post = ({ post, allLikedPosts, refetch }) => {
                             />
                             {likedPostArrayByUserName.length > 0 ? (
                                 <>
-                                    You 
+                                    You
                                     {likedPostArrayByPostId.length > 1
-                                        ? ` and ${likedPostArrayByPostId.length - 1} Others`
+                                        ? ` and ${
+                                              likedPostArrayByPostId.length - 1
+                                          } Others`
                                         : ""}
-                                    
                                 </>
                             ) : (
                                 <>
@@ -143,7 +149,13 @@ const Post = ({ post, allLikedPosts, refetch }) => {
                         </div>
                         <div className={classes.cardFooterCounterCommentShared}>
                             <p className={classes.cardFooterCounterComment}>
-                                2 comments
+                                {commentArrayByPostId &&
+                                commentArrayByPostId.length > 0
+                                    ? commentArrayByPostId.length
+                                    : 0}{" "}
+                                {commentArrayByPostId.length > 0
+                                    ? "comments"
+                                    : "comment"}
                             </p>
                             <p className={classes.cardFooterCounterShared}>
                                 2 shared
@@ -188,12 +200,18 @@ const Post = ({ post, allLikedPosts, refetch }) => {
                                 Like
                             </div>
                         </OverlayTrigger>
-
                         <div className={classes.cardFooterBottomIconWrapper}>
-                            <FaCommentAlt
-                                className={classes.cardFooterBottomCommentIcon}
-                            />
-                            Comment
+                            <Link
+                                className={classes.cardFooterBottomCommentLink}
+                                to={`/posts/${_id}`}
+                            >
+                                <FaCommentAlt
+                                    className={
+                                        classes.cardFooterBottomCommentIcon
+                                    }
+                                />
+                                Comment
+                            </Link>
                         </div>
                         <div className={classes.cardFooterBottomIconWrapper}>
                             <IoIosShareAlt

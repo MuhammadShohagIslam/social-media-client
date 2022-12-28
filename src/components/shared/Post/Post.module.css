@@ -1,23 +1,23 @@
-.cardWrapper{
-    transition: all .4s;
+.cardWrapper {
+    transition: all 0.4s;
     margin-bottom: 10px;
 }
-.cardWrapper:hover{
-    border: 1px solid #D76826 !important;
+.cardWrapper:hover {
+    border: 1px solid #d76826 !important;
 }
-.cardHeaderWrapper{
+.cardHeaderWrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    transition: all .4s;
+    transition: all 0.4s;
     background-color: transparent !important;
     border-bottom: none !important;
 }
-.cardHeaderImg{
+.cardHeaderImg {
     width: 40px;
     height: 40px;
 }
-.cardHeaderName{
+.cardHeaderName {
     font-size: 17px;
     font-weight: 600;
     color: #000;
@@ -25,63 +25,63 @@
     margin-bottom: 4px;
     margin-top: 9px;
 }
-.cardHeaderPostCreatedAt{
+.cardHeaderPostCreatedAt {
     font-size: 13px;
     font-weight: 600;
     color: rgb(101, 103, 107);
     line-height: 1;
     margin-bottom: 0;
 }
-.cardContent{
+.cardContent {
     color: #000;
     font-size: 16px;
 }
-.cardContentDetails{
-    color: #D76826 !important;
+.cardContentDetails {
+    color: #d76826 !important;
     cursor: pointer;
-    margin-left:2px;
+    margin-left: 2px;
     font-size: 16px;
 }
-.cardImageWrapper{
+.cardImageWrapper {
     border-top: 1px solid rgba(0, 0, 0, 0.175);
 }
-.cardFooterWrapper{
+.cardFooterWrapper {
     background-color: transparent !important;
 }
-.cardFooterTopWrapper{
+.cardFooterTopWrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    transition: all .4s;
+    transition: all 0.4s;
     margin: 10px 10px !important;
     padding-bottom: 15px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.175);
     color: rgb(101, 103, 107);
 }
-.cardFooterIconWrapper{
+.cardFooterIconWrapper {
     cursor: pointer;
 }
-.cardFooterBottomIconWrapper{
+.cardFooterBottomIconWrapper {
     cursor: pointer;
 }
-.cardFooterLikedIcon{
-    color: #D76826;
+.cardFooterLikedIcon {
+    color: #d76826;
     margin-right: 4px;
     font-size: 19px;
     margin-top: -5px;
 }
-.cardFooterBottomUnLikedIcon{
+.cardFooterBottomUnLikedIcon {
     color: #000;
     margin-right: 4px;
     font-size: 19px;
     margin-top: -5px;
 }
-.cardFooterCounterCommentShared{
+.cardFooterCounterCommentShared {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.cardFooterCounterComment{
+.cardFooterCounterComment {
     cursor: pointer;
     color: rgb(101, 103, 107);
     font-size: 15px;
@@ -89,45 +89,48 @@
     margin-right: 10px;
     border-bottom: 1px solid transparent;
 }
-.cardFooterCounterComment:hover{
+.cardFooterCounterComment:hover {
     border-bottom: 1px solid rgb(101, 103, 107);
 }
-.cardFooterCounterShared{
+.cardFooterCounterShared {
     cursor: pointer;
     color: rgb(101, 103, 107);
     font-size: 15px;
     margin-bottom: 0;
     border-bottom: 1px solid transparent;
 }
-.cardFooterCounterShared:hover{
+.cardFooterCounterShared:hover {
     border-bottom: 1px solid rgb(101, 103, 107);
 }
 
-.cardFooterBottomWrapper{
+.cardFooterBottomWrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    transition: all .4s;
+    transition: all 0.4s;
     padding: 10px 35px !important;
     color: rgb(101, 103, 107);
     font-weight: 600;
 }
-.cardFooterBottomLikedIcon{
-    color: #D76826;
+.cardFooterBottomLikedIcon {
+    color: #d76826;
     margin-right: 4px;
     font-size: 19px;
     margin-top: -4px;
     font-weight: 600;
 }
-.cardFooterBottomCommentIcon{
-    color: #D76826;
+.cardFooterBottomCommentLink {
+    color: rgb(101, 103, 107) !important;
+}
+.cardFooterBottomCommentIcon {
+    color: #d76826;
     margin-right: 4px;
     font-size: 16px;
     margin-top: -2px;
     font-weight: 600;
 }
-.cardFooterBottomSharedIcon{
-    color: #D76826;
+.cardFooterBottomSharedIcon {
+    color: #d76826;
     margin-right: 4px;
     font-size: 19px;
     margin-top: -4px;
@@ -135,21 +138,21 @@
 }
 
 @media only screen and (max-width: 767px) {
-    .postWrapper{
-        padding:30px 0px
+    .postWrapper {
+        padding: 30px 0px;
     }
-    .cardFooterIconWrapper{
+    .cardFooterIconWrapper {
         display: none;
     }
-    .cardFooterCounterShared{
+    .cardFooterCounterShared {
         display: none;
     }
-    .cardFooterTopWrapper{
+    .cardFooterTopWrapper {
         justify-content: end;
         margin: 2px 0px !important;
         padding-bottom: 9px;
     }
-    .cardFooterBottomWrapper{
+    .cardFooterBottomWrapper {
         padding: 10px 0px !important;
         color: rgb(101, 103, 107);
         font-weight: 600;
@@ -158,14 +161,12 @@
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-    .postWrapper{
-        padding:40px 0px
+    .postWrapper {
+        padding: 40px 0px;
     }
 }
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
-    .postWrapper{
-        padding:40px 0px
+    .postWrapper {
+        padding: 40px 0px;
     }
 }
-
-

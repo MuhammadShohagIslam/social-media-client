@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Card, Image, Container,OverlayTrigger, Tooltip } from "react-bootstrap";
+import {
+    Card,
+    Image,
+    Container,
+    OverlayTrigger,
+    Tooltip,
+} from "react-bootstrap";
 import moment from "moment";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import MediaLayout from "./../../../../Layout/MediaLayout/MediaLayout";
@@ -13,6 +19,8 @@ import { useAuth } from "./../../../../contexts/AuthProvider/AuthProvider";
 import { getPostByPostId } from "./../../../../api/posts";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
+import axios from "axios";
+import { createNewComment, getAllComments } from "./../../../../api/comments";
 import {
     getAllLikePosts,
     removedLikedPost,
@@ -21,6 +29,8 @@ import {
 
 const PostDetails = () => {
     const [post, setPost] = useState({});
+    const [loading, setLoading] = useState(false);
+    const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgdb_key}`;
     const { postId } = useParams();
     const navigate = useNavigate();
     const location = useLocation();
@@ -42,6 +52,7 @@ const PostDetails = () => {
         }
     }, [postId]);
 
+    // functionality about like of the post
     const {
         status: allLikedPostsStatus,
         data: allLikedPosts = [],
@@ -108,6 +119,106 @@ const PostDetails = () => {
                 likedPost.likedUserName === user?.displayName
         );
 
+    // functionality about comment of the post
+
+    const {
+        status: allCommentsStatus,
+        data: allComments = [],
+        error: allCommentsError,
+        refetch: refetchComment,
+    } = useQuery({
+        queryKey: ["comments"],
+        queryFn: async () => {
+            const data = await getAllComments();
+            return data.data;
+        },
+    });
+
+    const handleCommentThePost = (event, setPostCommentImages) => {
+        event.preventDefault();
+
+        const form = event.target;
+        const postComment = form.postComment.value;
+        const commentImage = form.commentImage.files[0];
+
+        if (!user && !user?.uid) {
+            return navigate("/login", {
+                state: { from: location },
+                replace: true,
+            });
+        }
+
+        if (commentImage) {
+            const formData = new FormData();
+            formData.append("image", commentImage);
+            setLoading(true);
+
+            axios
+                .post(url, formData)
+                .then((imgData) => {
+                    const commentImgUrl = imgData.data.data.url;
+                    const commentObjectData = {
+                        commentedName: user?.displayName,
+                        commentedEmail: user?.email,
+                        commentedUserImage: user?.photoURL,
+                        postId: postId,
+                        comment: postComment,
+                        commentImg: commentImgUrl,
+                    };
+
+                    createNewComment(commentObjectData)
+                        .then((data) => {
+                            if (data.data.acknowledged) {
+                                toast.success(
+                                    "Your are Commented in this Post!"
+                                );
+                                form.reset();
+                                setPostCommentImages(null);
+                                setLoading(false);
+                                refetchComment();
+                            }
+                        })
+                        .catch((error) => {
+                            setLoading(false);
+                            console.log(error);
+                        });
+                })
+                .catch((err) => {
+                    console.log(err);
+                    setLoading(false);
+                });
+        } else {
+            const commentObjectData = {
+                commentedName: user?.displayName,
+                commentedEmail: user?.email,
+                commentedUserImage: user?.photoURL,
+                postId: postId,
+                comment: postComment,
+                commentImg: null,
+            };
+            setLoading(true);
+            createNewComment(commentObjectData)
+                .then((data) => {
+                    if (data.data.acknowledged) {
+                        toast.success("Your are Commented in this Post!");
+                        form.reset();
+                        setPostCommentImages(null);
+                        setLoading(false);
+                        refetchComment();
+                    }
+                })
+                .catch((error) => {
+                    setLoading(false);
+                    console.log(error);
+                });
+        }
+    };
+
+    const commentArrayByPostId =
+        allComments &&
+        allComments.filter((comment) => comment.postId === postId);
+
+    console.log(commentArrayByPostId);
     return (
         <MediaLayout>
             <Container>
@@ -182,7 +293,13 @@ const PostDetails = () => {
                                 }
                             >
                                 <p className={classes.cardFooterCounterComment}>
-                                    2 comments
+                                    {commentArrayByPostId &&
+                                    commentArrayByPostId.length > 0
+                                        ? commentArrayByPostId.length
+                                        : 0}{" "}
+                                    {commentArrayByPostId.length > 0
+                                        ? "comments"
+                                        : "comment"}
                                 </p>
                                 <p className={classes.cardFooterCounterShared}>
                                     2 shared
@@ -247,15 +364,36 @@ const PostDetails = () => {
                         <h4 className="text-center mb-4">
                             Comment To Post Here!
                         </h4>
-                        <CreateComment user={user} />
+                        <CreateComment
+                            user={user}
+                            handleCommentThePost={handleCommentThePost}
+                            loading={loading}
+                        />
                     </div>
                     <hr />
                     <div>
-                        <h4 className="ms-4 mt-3">List Of The Comments</h4>
+                        <h4 className="ms-4 mt-3">
+                            {commentArrayByPostId &&
+                            commentArrayByPostId.length > 0
+                                ? `Comments(${commentArrayByPostId.length})`
+                                : `Comments(0)`}
+                        </h4>
                         <div>
-                            <Comment />
-                            <Comment />
-                            <Comment />
+                            {commentArrayByPostId &&
+                            commentArrayByPostId.length > 0 ? (
+                                <>
+                                    {commentArrayByPostId.map((comment) => (
+                                        <Comment
+                                            comment={comment}
+                                            key={comment._id}
+                                        />
+                                    ))}
+                                </>
+                            ) : (
+                                <h5 className="text-center text-dark mb-5">
+                                    There is no comment
+                                </h5>
+                            )}
                         </div>
                     </div>
                 </Card>

@@ -12,6 +12,7 @@ import axios from "axios";
 import { createNewPost } from "./../../../api/posts";
 import { useAuth } from "./../../../contexts/AuthProvider/AuthProvider";
 import { getAllLikePosts } from "../../../api/likePosts";
+import { getAllComments } from "../../../api/comments";
 
 const Posts = () => {
     const [loading, setLoading] = useState(false);
@@ -46,7 +47,19 @@ const Posts = () => {
         },
     });
 
-    const handlePostSubmit = (event) => {
+    const {
+        status: allCommentsStatus,
+        data: allComments = [],
+        error: allCommentsError,
+    } = useQuery({
+        queryKey: ["comments"],
+        queryFn: async () => {
+            const data = await getAllComments();
+            return data.data;
+        },
+    });
+
+    const handlePostSubmit = (event, setPostImages) => {
         event.preventDefault();
 
         const form = event.target;
@@ -86,6 +99,7 @@ const Posts = () => {
                             if (data.data.acknowledged) {
                                 toast.success("Post is Created!");
                                 form.reset();
+                                setPostImages(null);
                                 setLoading(false);
                                 navigate("/media");
                             }
@@ -107,12 +121,13 @@ const Posts = () => {
                 content: postContent,
                 image: null,
             };
-
+            setLoading(true);
             createNewPost(postObjectData)
                 .then((data) => {
                     if (data.data.acknowledged) {
                         toast.success("Post is Created!");
                         form.reset();
+                        setPostImages(null);
                         setLoading(false);
                         navigate("/media");
                     }
@@ -180,6 +195,7 @@ const Posts = () => {
                                                         allLikedPosts
                                                     }
                                                     refetch={refetch}
+                                                    allComments={allComments}
                                                 />
                                             </Col>
                                         ))}
