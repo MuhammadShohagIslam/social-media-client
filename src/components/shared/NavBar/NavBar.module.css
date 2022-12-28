@@ -18,6 +18,9 @@
 }
 .logOutIcon{
     font-size: 22px !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 }
 .navLink:hover {
     color: #D76826 !important;

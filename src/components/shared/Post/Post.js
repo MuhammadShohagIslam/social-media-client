@@ -1,14 +1,81 @@
 import React from "react";
 import moment from "moment";
-import { Card, Container, Image } from "react-bootstrap";
+import { useNavigate, useLocation } from "react-router-dom";
+import {
+    Card,
+    Container,
+    Image,
+    OverlayTrigger,
+    Tooltip,
+} from "react-bootstrap";
 import classes from "./Post.module.css";
 import { AiFillLike } from "react-icons/ai";
 import { FaCommentAlt, FaUserAlt } from "react-icons/fa";
 import { IoIosShareAlt } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { useAuth } from "./../../../contexts/AuthProvider/AuthProvider";
+import { likeThePost, removedLikedPost } from "../../../api/likePosts";
+import { toast } from "react-hot-toast";
 
-const Post = ({ post }) => {
+const Post = ({ post, allLikedPosts, refetch }) => {
+    const { user } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
     const { _id, content, image, postedAt, postedName, postedUserImage } = post;
+
+    const handleLikedThePost = (id, isLikedPostsArrayList) => {
+        const likedPostData = {
+            postId: id,
+            likedUserEmail: user?.email,
+            likedUserName: user?.displayName,
+        };
+        if (!user && !user?.uid) {
+            return navigate("/login", {
+                state: { from: location },
+                replace: true,
+            });
+        }
+        if (!isLikedPostsArrayList) {
+            likeThePost(likedPostData)
+                .then((data) => {
+                    if (data.data.acknowledged) {
+                        toast.success("Like The Post!");
+                        refetch();
+                    }
+                })
+                .catch((error) => {
+                    console.log(error.message);
+                });
+        } else {
+            removedLikedPost(user?.email, id).then((data) => {
+                if (data.data.acknowledged) {
+                    toast.success(`Removed To Liked From The Post!`);
+                    refetch();
+                }
+            });
+        }
+    };
+    const likedPostsByMap = allLikedPosts?.reduce((acc, cur) => {
+        if (cur.postId === _id) {
+            acc.push(cur.likedUserEmail);
+        }
+        return acc;
+    }, []);
+
+    const isLikedPostsArrayList = likedPostsByMap.includes(user?.email);
+
+    const likedPostArrayByPostId =
+        allLikedPosts &&
+        allLikedPosts.filter((likedPost) => likedPost.postId === _id);
+
+    const likedPostArrayByUserName =
+        allLikedPosts &&
+        allLikedPosts.filter(
+            (likedPost) =>
+                likedPost.postId === _id &&
+                likedPost.likedUserName === user?.displayName
+        );
+
     return (
         <Container>
             <Card className={classes.cardWrapper}>
@@ -29,7 +96,7 @@ const Post = ({ post }) => {
                     <div>
                         <h2 className={classes.cardHeaderName}>{postedName}</h2>
                         <p className={classes.cardHeaderPostCreatedAt}>
-                            {moment(postedAt).startOf("hour").fromNow()}
+                            {moment(postedAt).fromNow()}
                         </p>
                     </div>
                 </Card.Header>
@@ -55,7 +122,24 @@ const Post = ({ post }) => {
                             <AiFillLike
                                 className={classes.cardFooterLikedIcon}
                             />
-                            You and 1k Others
+                            {likedPostArrayByUserName.length > 0 ? (
+                                <>
+                                    You 
+                                    {likedPostArrayByPostId.length > 1
+                                        ? ` and ${likedPostArrayByPostId.length - 1} Others`
+                                        : ""}
+                                    
+                                </>
+                            ) : (
+                                <>
+                                    {likedPostArrayByPostId.length > 0
+                                        ? likedPostArrayByPostId.length
+                                        : 0}{" "}
+                                    {likedPostArrayByPostId.length > 0
+                                        ? "Likes"
+                                        : "Like"}
+                                </>
+                            )}
                         </div>
                         <div className={classes.cardFooterCounterCommentShared}>
                             <p className={classes.cardFooterCounterComment}>
@@ -67,12 +151,44 @@ const Post = ({ post }) => {
                         </div>
                     </div>
                     <div className={classes.cardFooterBottomWrapper}>
-                        <div className={classes.cardFooterBottomIconWrapper}>
-                            <AiFillLike
-                                className={classes.cardFooterBottomLikedIcon}
-                            />
-                            Like
-                        </div>
+                        <OverlayTrigger
+                            placement="top"
+                            overlay={
+                                <Tooltip id={`tooltip-top`}>
+                                    {!user && !user?.uid
+                                        ? "Login To Like"
+                                        : likedPostArrayByUserName.length > 0
+                                        ? "Already Like"
+                                        : "Like"}
+                                </Tooltip>
+                            }
+                        >
+                            <div
+                                className={classes.cardFooterBottomIconWrapper}
+                                onClick={() =>
+                                    handleLikedThePost(
+                                        _id,
+                                        isLikedPostsArrayList
+                                    )
+                                }
+                            >
+                                {isLikedPostsArrayList ? (
+                                    <AiFillLike
+                                        className={
+                                            classes.cardFooterBottomLikedIcon
+                                        }
+                                    />
+                                ) : (
+                                    <AiFillLike
+                                        className={
+                                            classes.cardFooterBottomUnLikedIcon
+                                        }
+                                    />
+                                )}
+                                Like
+                            </div>
+                        </OverlayTrigger>
+
                         <div className={classes.cardFooterBottomIconWrapper}>
                             <FaCommentAlt
                                 className={classes.cardFooterBottomCommentIcon}

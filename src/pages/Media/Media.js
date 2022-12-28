@@ -4,6 +4,7 @@ import Post from "./../../components/shared/Post/Post";
 import { useQuery } from "@tanstack/react-query";
 import { getAllPosts } from "../../api/posts";
 import { Spinner } from "react-bootstrap";
+import { getAllLikePosts } from "../../api/likePosts";
 
 const Media = () => {
     const { status, data, error } = useQuery({
@@ -14,16 +15,29 @@ const Media = () => {
         },
     });
 
+    const {
+        status: allLikedPostsStatus,
+        data: allLikedPosts = [],
+        error: allLikedPostsError,
+        refetch,
+    } = useQuery({
+        queryKey: ["likedPosts"],
+        queryFn: async () => {
+            const data = await getAllLikePosts();
+            return data.data;
+        },
+    });
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
-    if (status === "error") {
+    if (status === "error" || allLikedPostsError === "error") {
         return <span>Error: {error.message}</span>;
     }
     return (
         <MediaLayout>
-            {status === "loading" ? (
+            {status === "loading" && allLikedPostsStatus === "loading" ? (
                 <div
                     style={{ height: "350px" }}
                     className="d-flex justify-content-center align-items-center"
@@ -35,7 +49,12 @@ const Media = () => {
                     {data.length > 0 ? (
                         <>
                             {data.map((post) => (
-                                <Post key={post._id} post={post} />
+                                <Post
+                                    key={post._id}
+                                    post={post}
+                                    allLikedPosts={allLikedPosts}
+                                    refetch={refetch}
+                                />
                             ))}
                         </>
                     ) : (

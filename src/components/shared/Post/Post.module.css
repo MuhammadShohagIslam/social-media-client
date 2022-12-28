@@ -68,7 +68,13 @@
     color: #D76826;
     margin-right: 4px;
     font-size: 19px;
-    margin-top: -2px;
+    margin-top: -5px;
+}
+.cardFooterBottomUnLikedIcon{
+    color: #000;
+    margin-right: 4px;
+    font-size: 19px;
+    margin-top: -5px;
 }
 .cardFooterCounterCommentShared{
     display: flex;

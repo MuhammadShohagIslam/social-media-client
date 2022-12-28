@@ -78,7 +78,7 @@ const MediaNavBar = () => {
                                 </LinkContainer>
                             </div>
                             <div className={`${classes.rightNavbar} d-lg-flex`}>
-                                {!user && !user?.uid ? (
+                                {user && user?.uid ? (
                                     <>
                                         <LinkContainer to="/profile">
                                             <Nav.Link
@@ -117,12 +117,12 @@ const MediaNavBar = () => {
                                                 )}
                                             </Nav.Link>
                                         </LinkContainer>
-                                        <Nav.Link
+                                        <li
                                             onClick={handleLogOut}
                                             className={classes.logOutIcon}
                                         >
                                             <AiOutlineLogout className="text-white fs-4" />
-                                        </Nav.Link>
+                                        </li>
                                     </>
                                 ) : (
                                     <>

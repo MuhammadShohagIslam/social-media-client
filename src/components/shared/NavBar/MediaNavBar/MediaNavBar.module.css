@@ -15,6 +15,9 @@
 }
 .logOutIcon{
     font-size: 22px !important;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 }
 .navbarFormWrapper{
     width: 40%;

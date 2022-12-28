@@ -32,7 +32,7 @@ const NavBar = () => {
                 variant="dark"
             >
                 <Container>
-                    <LinkContainer  to="/">
+                    <LinkContainer to="/">
                         <Navbar.Brand className={classes.logo}>
                             ShohagCSM
                         </Navbar.Brand>
@@ -99,12 +99,12 @@ const NavBar = () => {
                                                 )}
                                             </Nav.Link>
                                         </LinkContainer>
-                                        <Nav.Link
+                                        <li
                                             onClick={handleLogOut}
                                             className={classes.logOutIcon}
                                         >
                                             <AiOutlineLogout className="text-white fs-4" />
-                                        </Nav.Link>
+                                        </li>
                                     </>
                                 ) : (
                                     <>

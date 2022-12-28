@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate,useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
 import CreatePost from "../../../components/shared/CreatePost/CreatePost";
 import SectionTitle from "../../../components/shared/SectionTitle/SectionTitle";
@@ -10,20 +10,38 @@ import { getAllPosts } from "../../../api/posts";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { createNewPost } from "./../../../api/posts";
-import { useAuth } from './../../../contexts/AuthProvider/AuthProvider';
+import { useAuth } from "./../../../contexts/AuthProvider/AuthProvider";
+import { getAllLikePosts } from "../../../api/likePosts";
 
 const Posts = () => {
     const [loading, setLoading] = useState(false);
 
-    const {user} = useAuth()
+    const { user } = useAuth();
     const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgdb_key}`;
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { status, data, error } = useQuery({
+    const {
+        status,
+        data = [],
+        error,
+    } = useQuery({
         queryKey: ["posts"],
         queryFn: async () => {
             const data = await getAllPosts();
+            return data.data;
+        },
+    });
+
+    const {
+        status: allLikedPostsStatus,
+        data: allLikedPosts = [],
+        error: allLikedPostsError,
+        refetch,
+    } = useQuery({
+        queryKey: ["likedPosts"],
+        queryFn: async () => {
+            const data = await getAllLikePosts();
             return data.data;
         },
     });
@@ -35,11 +53,11 @@ const Posts = () => {
         const postContent = form.postContent.value;
         const postImage = form.postImage.files[0];
 
-        if(!user && !user?.uid){
+        if (!user && !user?.uid) {
             return navigate("/login", {
                 state: { from: location },
                 replace: true,
-            }); 
+            });
         }
         // validation
         if (!postContent) {
@@ -106,10 +124,9 @@ const Posts = () => {
         }
     };
 
-    if (status === "error") {
+    if (status === "error" || allLikedPostsError === "error") {
         return <span>Error: {error.message}</span>;
     }
-
 
     return (
         <>
@@ -137,7 +154,8 @@ const Posts = () => {
                         info="Trending Post Which are People Liked"
                     />
                     <Row>
-                        {status === "loading" ? (
+                        {status === "loading" &&
+                        allLikedPostsStatus === "loading" ? (
                             <div
                                 style={{ height: "350px" }}
                                 className="d-flex justify-content-center align-items-center"
@@ -152,9 +170,16 @@ const Posts = () => {
                                 {data.length > 0 ? (
                                     <>
                                         {data.map((post) => (
-                                            <Col  key={post._id} lg={{ span: 6, offset: 3 }}>
+                                            <Col
+                                                key={post._id}
+                                                lg={{ span: 6, offset: 3 }}
+                                            >
                                                 <Post
                                                     post={post}
+                                                    allLikedPosts={
+                                                        allLikedPosts
+                                                    }
+                                                    refetch={refetch}
                                                 />
                                             </Col>
                                         ))}

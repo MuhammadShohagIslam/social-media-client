@@ -12,7 +12,7 @@ const MediaLayout = ({ children }) => {
     const handleOpenMenu = () => {
         setOpenLeftSideBar(!openLeftSideBar);
     };
-     console.log(openLeftSideBar);
+
     return (
         <>
             <header>
