@@ -139,7 +139,11 @@ const Posts = () => {
         }
     };
 
-    if (status === "error" || allLikedPostsError === "error") {
+    if (
+        status === "error" ||
+        allLikedPostsError === "error" ||
+        allCommentsError === "error"
+    ) {
         return <span>Error: {error.message}</span>;
     }
 
@@ -169,8 +173,9 @@ const Posts = () => {
                         info="Trending Post Which are People Liked"
                     />
                     <Row>
-                        {status === "loading" &&
-                        allLikedPostsStatus === "loading" ? (
+                        {status === "loading" ||
+                        allLikedPostsStatus === "loading" ||
+                        allCommentsStatus === "loading" ? (
                             <div
                                 style={{ height: "350px" }}
                                 className="d-flex justify-content-center align-items-center"

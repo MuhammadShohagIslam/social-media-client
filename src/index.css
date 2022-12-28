@@ -57,6 +57,9 @@ a {
 .navbar-nav .show > .nav-link {
     color: #d76826 !important;
 }
+.nav-link.active{
+    color: #d76826 !important;
+}
 .nav-link {
     color: #000 !important;
 }

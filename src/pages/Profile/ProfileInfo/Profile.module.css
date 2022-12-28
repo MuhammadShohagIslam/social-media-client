@@ -1,12 +1,4 @@
-.profileWrapper{
-    display: grid;
-    grid-template-columns: 400px auto;
-    padding-top: 0px;
-    height: 100vh;
-}
-.profileLeftWrapper{
-    background-color: #000 !important;
-}
+
 .profileInformationWrapper{
     display: flex;
     align-items: center;

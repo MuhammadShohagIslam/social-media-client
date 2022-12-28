@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllPosts } from "../../api/posts";
 import { Spinner } from "react-bootstrap";
 import { getAllLikePosts } from "../../api/likePosts";
+import { getAllComments } from "../../api/comments";
 
 const Media = () => {
     const { status, data, error } = useQuery({
@@ -28,16 +29,34 @@ const Media = () => {
         },
     });
 
+    const {
+        status: allCommentsStatus,
+        data: allComments = [],
+        error: allCommentsError,
+    } = useQuery({
+        queryKey: ["comments"],
+        queryFn: async () => {
+            const data = await getAllComments();
+            return data.data;
+        },
+    });
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
-    if (status === "error" || allLikedPostsError === "error") {
+    if (
+        status === "error" ||
+        allLikedPostsError === "error" ||
+        allCommentsError === "error"
+    ) {
         return <span>Error: {error.message}</span>;
     }
     return (
         <MediaLayout>
-            {status === "loading" && allLikedPostsStatus === "loading" ? (
+            {status === "loading" ||
+            allLikedPostsStatus === "loading" ||
+            allCommentsStatus === "loading" ? (
                 <div
                     style={{ height: "350px" }}
                     className="d-flex justify-content-center align-items-center"
@@ -54,6 +73,7 @@ const Media = () => {
                                     post={post}
                                     allLikedPosts={allLikedPosts}
                                     refetch={refetch}
+                                    allComments={allComments}
                                 />
                             ))}
                         </>

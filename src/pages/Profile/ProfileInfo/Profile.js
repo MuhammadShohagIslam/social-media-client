@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Form, Container, Col, Row, Figure } from "react-bootstrap";
-import { useAuth } from "../../contexts/AuthProvider/AuthProvider";
+import { Form, Container, Col, Row } from "react-bootstrap";
+import { useAuth } from "../../../contexts/AuthProvider/AuthProvider";
 import { toast } from "react-hot-toast";
-import { FaUserAlt } from "react-icons/fa";
 import { BiEdit } from "react-icons/bi";
-import Main from "./../../Layout/Main/Main";
 import classes from "./Profile.module.css";
-import ProfileEditModal from "../../components/shared/ProfileEditModal/ProfileEditModal";
+import ProfileEditModal from "../../../components/shared/ProfileEditModal/ProfileEditModal";
+import ProfileLayout from "../../../Layout/ProfileLayout/ProfileLayout";
 
 const Profile = () => {
     const { user, setLoading, userProfileUpdate } = useAuth();
@@ -48,30 +47,10 @@ const Profile = () => {
             });
     };
     return (
-        <Main>
+        <ProfileLayout>
             <div className={classes.profileWrapper}>
-                <div className={classes.profileLeftWrapper}>
-                    <div className="mt-5">
-                        <Figure className="text-center w-100">
-                            {user?.photoURL ? (
-                                <Figure.Image
-                                    width={100}
-                                    height={100}
-                                    alt="profile"
-                                    roundedCircle
-                                    src={`${user?.photoURL}`}
-                                />
-                            ) : (
-                                <FaUserAlt className="text-white fs-1" />
-                            )}
-                        </Figure>
-                        <h4 className="text-center text-white">
-                            Muhammad Jhohirul Islam
-                        </h4>
-                    </div>
-                </div>
                 <div>
-                    <Container className="py-5 ps-5">
+                    <Container className="py-2 ps-4 ps-md-0 ps-lg-4">
                         <div className={classes.profileInformationWrapper}>
                             <h2 className={classes.profileInformationTitle}>
                                 Profile Information
@@ -162,7 +141,7 @@ const Profile = () => {
                     modalName="Profile Information Update"
                 />
             </div>
-        </Main>
+        </ProfileLayout>
     );
 };
 

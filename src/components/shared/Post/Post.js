@@ -80,7 +80,6 @@ const Post = ({ post, allLikedPosts, refetch, allComments }) => {
     const commentArrayByPostId =
         allComments && allComments.filter((comment) => comment.postId === _id);
 
-    console.log(commentArrayByPostId);
     return (
         <Container>
             <Card className={classes.cardWrapper}>

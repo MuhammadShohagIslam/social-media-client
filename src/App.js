@@ -5,8 +5,8 @@ import PostDetails from "./pages/Home/Posts/PostDetails/PostDetails";
 import Login from "./pages/Login/Login";
 import Media from "./pages/Media/Media";
 import Messages from "./pages/Messages/Messages";
-import Profile from "./pages/Profile/Profile";
 import Registration from "./pages/Registration/Registration";
+import Profile from './pages/Profile/ProfileInfo/Profile';
 
 
 
