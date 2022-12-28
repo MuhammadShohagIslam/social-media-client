@@ -18,11 +18,12 @@
     height: 40px;
 }
 .cardHeaderName{
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 600;
     color: #000;
     line-height: 1;
-    margin-bottom: 1px;
+    margin-bottom: 4px;
+    margin-top: 9px;
 }
 .cardHeaderPostCreatedAt{
     font-size: 13px;
@@ -31,9 +32,15 @@
     line-height: 1;
     margin-bottom: 0;
 }
+.cardContent{
+    color: #000;
+    font-size: 16px;
+}
 .cardContentDetails{
     color: #D76826 !important;
     cursor: pointer;
+    margin-left:2px;
+    font-size: 16px;
 }
 .cardImageWrapper{
     border-top: 1px solid rgba(0, 0, 0, 0.175);

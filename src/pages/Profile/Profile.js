@@ -66,7 +66,6 @@ const Profile = () => {
                             )}
                         </Figure>
                         <h4 className="text-center text-white">
-                            {" "}
                             Muhammad Jhohirul Islam
                         </h4>
                     </div>

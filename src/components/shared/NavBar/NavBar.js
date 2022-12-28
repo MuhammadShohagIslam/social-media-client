@@ -60,7 +60,7 @@ const NavBar = () => {
                                 </LinkContainer>
                             </div>
                             <div className="d-lg-flex">
-                                {!user && !user?.uid ? (
+                                {user && user?.uid ? (
                                     <>
                                         <LinkContainer to="/profile">
                                             <Nav.Link

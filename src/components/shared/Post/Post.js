@@ -1,46 +1,53 @@
 import React from "react";
+import moment from "moment";
 import { Card, Container, Image } from "react-bootstrap";
 import classes from "./Post.module.css";
 import { AiFillLike } from "react-icons/ai";
-import { FaCommentAlt } from "react-icons/fa";
+import { FaCommentAlt, FaUserAlt } from "react-icons/fa";
 import { IoIosShareAlt } from "react-icons/io";
 import { Link } from "react-router-dom";
 
-const Post = () => {
+const Post = ({ post }) => {
+    const { _id, content, image, postedAt, postedName, postedUserImage } = post;
     return (
         <Container>
             <Card className={classes.cardWrapper}>
                 <Card.Header className={classes.cardHeaderWrapper}>
                     <div>
-                        <Image
-                            className={classes.cardHeaderImg}
-                            roundedCircle
-                            src="holder.js/100px180"
-                        />
+                        {postedUserImage ? (
+                            <Image
+                                className={classes.cardHeaderImg}
+                                roundedCircle
+                                src={postedUserImage}
+                            />
+                        ) : (
+                            <span className={classes.cardHeaderImg}>
+                                <FaUserAlt className="text-black fs-5" />
+                            </span>
+                        )}
                     </div>
                     <div>
-                        <h2 className={classes.cardHeaderName}>
-                            Muhammad Shohag Islam
-                        </h2>
+                        <h2 className={classes.cardHeaderName}>{postedName}</h2>
                         <p className={classes.cardHeaderPostCreatedAt}>
-                            2 days ago
+                            {moment(postedAt).startOf("hour").fromNow()}
                         </p>
                     </div>
                 </Card.Header>
                 <Card.Body>
-                    <Card.Text>
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.{" "}
+                    <Card.Text className={classes.cardContent}>
+                        {content.length > 100
+                            ? `${content.slice(0, 100)} ...`
+                            : content}
                         <Link
                             className={classes.cardContentDetails}
-                            to={`/posts/1`}
+                            to={`/posts/${_id}`}
                         >
-                            Details
+                            details
                         </Link>
                     </Card.Text>
                 </Card.Body>
                 <div className={classes.cardImageWrapper}>
-                    <Card.Img variant="bottom" src="holder.js/100px180" />
+                    <Card.Img variant="bottom" src={image && image} />
                 </div>
                 <Card.Footer className={classes.cardFooterWrapper}>
                     <div className={classes.cardFooterTopWrapper}>

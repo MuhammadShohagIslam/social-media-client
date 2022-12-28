@@ -1,10 +1,116 @@
-import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useNavigate,useLocation } from "react-router-dom";
+import { Container, Row, Col, Spinner } from "react-bootstrap";
 import CreatePost from "../../../components/shared/CreatePost/CreatePost";
 import SectionTitle from "../../../components/shared/SectionTitle/SectionTitle";
 import Post from "./../../../components/shared/Post/Post";
-import classes from './Posts.module.css'
+import classes from "./Posts.module.css";
+import { getAllPosts } from "../../../api/posts";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+import { createNewPost } from "./../../../api/posts";
+import { useAuth } from './../../../contexts/AuthProvider/AuthProvider';
+
 const Posts = () => {
+    const [loading, setLoading] = useState(false);
+
+    const {user} = useAuth()
+    const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgdb_key}`;
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const { status, data, error } = useQuery({
+        queryKey: ["posts"],
+        queryFn: async () => {
+            const data = await getAllPosts();
+            return data.data;
+        },
+    });
+
+    const handlePostSubmit = (event) => {
+        event.preventDefault();
+
+        const form = event.target;
+        const postContent = form.postContent.value;
+        const postImage = form.postImage.files[0];
+
+        if(!user && !user?.uid){
+            return navigate("/login", {
+                state: { from: location },
+                replace: true,
+            }); 
+        }
+        // validation
+        if (!postContent) {
+            return toast.error("Please Some Content of Post!");
+        }
+
+        if (postImage) {
+            const formData = new FormData();
+            formData.append("image", postImage);
+            setLoading(true);
+
+            axios
+                .post(url, formData)
+                .then((imgData) => {
+                    const productImgUrl = imgData.data.data.url;
+                    const postObjectData = {
+                        postedName: user?.displayName,
+                        postedEmail: user?.email,
+                        postedUserImage: user?.photoURL,
+                        content: postContent,
+                        image: productImgUrl,
+                    };
+
+                    createNewPost(postObjectData)
+                        .then((data) => {
+                            if (data.data.acknowledged) {
+                                toast.success("Post is Created!");
+                                form.reset();
+                                setLoading(false);
+                                navigate("/media");
+                            }
+                        })
+                        .catch((error) => {
+                            setLoading(false);
+                            console.log(error);
+                        });
+                })
+                .catch((err) => {
+                    console.log(err);
+                    setLoading(false);
+                });
+        } else {
+            const postObjectData = {
+                postedName: user?.displayName,
+                postedEmail: user?.email,
+                postedUserImage: user?.photoURL,
+                content: postContent,
+                image: null,
+            };
+
+            createNewPost(postObjectData)
+                .then((data) => {
+                    if (data.data.acknowledged) {
+                        toast.success("Post is Created!");
+                        form.reset();
+                        setLoading(false);
+                        navigate("/media");
+                    }
+                })
+                .catch((error) => {
+                    setLoading(false);
+                    console.log(error);
+                });
+        }
+    };
+
+    if (status === "error") {
+        return <span>Error: {error.message}</span>;
+    }
+
+
     return (
         <>
             <section className={classes.postWrapper}>
@@ -15,7 +121,11 @@ const Posts = () => {
                     />
                     <Row>
                         <Col md={{ span: 6, offset: 3 }}>
-                            <CreatePost />
+                            <CreatePost
+                                handlePostSubmit={handlePostSubmit}
+                                loading={loading}
+                                user={user}
+                            />
                         </Col>
                     </Row>
                 </Container>
@@ -27,13 +137,35 @@ const Posts = () => {
                         info="Trending Post Which are People Liked"
                     />
                     <Row>
-                        <Col>
-                            <Col lg={{ span: 6, offset: 3 }}>
-                                <Post />
-                                <Post />
-                                <Post />
+                        {status === "loading" ? (
+                            <div
+                                style={{ height: "350px" }}
+                                className="d-flex justify-content-center align-items-center"
+                            >
+                                <Spinner
+                                    animation="border"
+                                    className="spinner-color"
+                                />
+                            </div>
+                        ) : (
+                            <Col>
+                                {data.length > 0 ? (
+                                    <>
+                                        {data.map((post) => (
+                                            <Col  key={post._id} lg={{ span: 6, offset: 3 }}>
+                                                <Post
+                                                    post={post}
+                                                />
+                                            </Col>
+                                        ))}
+                                    </>
+                                ) : (
+                                    <h3 className="text-center text-dark mb-5">
+                                        There is no post
+                                    </h3>
+                                )}
                             </Col>
-                        </Col>
+                        )}
                     </Row>
                 </Container>
             </section>

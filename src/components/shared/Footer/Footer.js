@@ -1,8 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import classes from "./Footer.module.css";
-import {FaFacebookF, FaTwitter, FaLinkedinIn} from 'react-icons/fa'
 
 const Footer = () => {
     return (
