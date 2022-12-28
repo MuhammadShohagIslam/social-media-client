@@ -13,6 +13,11 @@ export const getAllPosts = async () => {
     return await axios.get(`${process.env.REACT_APP_server_api}/posts`);
 };
 
+// get top three posts
+export const getTopThreePosts = async () => {
+    return await axios.get(`${process.env.REACT_APP_server_api}/top-three-post`);
+};
+
 // get post by postId
 export const getPostByPostId = async (postId) => {
     return await axios.get(

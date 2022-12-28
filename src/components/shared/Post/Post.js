@@ -17,7 +17,7 @@ import { useAuth } from "./../../../contexts/AuthProvider/AuthProvider";
 import { likeThePost, removedLikedPost } from "../../../api/likePosts";
 import { toast } from "react-hot-toast";
 
-const Post = ({ post, allLikedPosts, refetch, allComments }) => {
+const Post = ({ post, allLikedPosts, refetch, allComments, refetchPost }) => {
     const { user } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -41,6 +41,7 @@ const Post = ({ post, allLikedPosts, refetch, allComments }) => {
                     if (data.data.acknowledged) {
                         toast.success("Like The Post!");
                         refetch();
+                        refetchPost();
                     }
                 })
                 .catch((error) => {
@@ -51,6 +52,7 @@ const Post = ({ post, allLikedPosts, refetch, allComments }) => {
                 if (data.data.acknowledged) {
                     toast.success(`Removed To Liked From The Post!`);
                     refetch();
+                    refetchPost();
                 }
             });
         }
@@ -62,7 +64,7 @@ const Post = ({ post, allLikedPosts, refetch, allComments }) => {
         return acc;
     }, []);
 
-    const isLikedPostsArrayList = likedPostsByMap.includes(user?.email);
+    const isLikedPostsArrayList = likedPostsByMap?.includes(user?.email);
 
     const likedPostArrayByPostId =
         allLikedPosts &&
@@ -161,6 +163,7 @@ const Post = ({ post, allLikedPosts, refetch, allComments }) => {
                             </p>
                         </div>
                     </div>
+
                     <div className={classes.cardFooterBottomWrapper}>
                         <OverlayTrigger
                             placement="top"

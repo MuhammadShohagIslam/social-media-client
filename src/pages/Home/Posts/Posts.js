@@ -6,7 +6,7 @@ import CreatePost from "../../../components/shared/CreatePost/CreatePost";
 import SectionTitle from "../../../components/shared/SectionTitle/SectionTitle";
 import Post from "./../../../components/shared/Post/Post";
 import classes from "./Posts.module.css";
-import { getAllPosts } from "../../../api/posts";
+import { getTopThreePosts } from "../../../api/posts";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { createNewPost } from "./../../../api/posts";
@@ -26,10 +26,11 @@ const Posts = () => {
         status,
         data = [],
         error,
+        refetch: refetchPost,
     } = useQuery({
-        queryKey: ["posts"],
+        queryKey: ["topThreePost"],
         queryFn: async () => {
-            const data = await getAllPosts();
+            const data = await getTopThreePosts();
             return data.data;
         },
     });
@@ -200,6 +201,7 @@ const Posts = () => {
                                                         allLikedPosts
                                                     }
                                                     refetch={refetch}
+                                                    refetchPost={refetchPost}
                                                     allComments={allComments}
                                                 />
                                             </Col>
