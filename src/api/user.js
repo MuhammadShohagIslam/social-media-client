@@ -16,3 +16,17 @@ export const createNewUser = async (userData) => {
     );
 };
 
+// get single user
+export const getUser = async (email, name) => {
+    return await axios.get(
+        `${process.env.REACT_APP_server_api}/users?email=${email}&name=${name}`
+    );
+};
+
+// create-or-update-user
+export const createOrUpdateUser = async (userData) => {
+    return await axios.patch(
+        `${process.env.REACT_APP_server_api}/create-or-update-user`,
+        userData
+    );
+};

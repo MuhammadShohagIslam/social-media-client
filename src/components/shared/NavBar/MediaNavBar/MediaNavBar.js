@@ -4,7 +4,7 @@ import {
     Navbar,
     Nav,
     Tooltip,
-    Figure,
+    Image,
     OverlayTrigger,
     Form,
     Button,
@@ -97,13 +97,11 @@ const MediaNavBar = () => {
                                                             </Tooltip>
                                                         }
                                                     >
-                                                        <Figure.Image
+                                                        <Image
                                                             width={35}
                                                             height={35}
-                                                            alt="profile"
                                                             roundedCircle
-                                                            className="mb-0"
-                                                            src={user?.photoURL}
+                                                            src={`${user?.photoURL}`}
                                                         />
                                                     </OverlayTrigger>
                                                 ) : (

@@ -4,7 +4,7 @@ import {
     Navbar,
     Nav,
     Tooltip,
-    Figure,
+    Image,
     OverlayTrigger,
 } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
@@ -79,13 +79,11 @@ const NavBar = () => {
                                                             </Tooltip>
                                                         }
                                                     >
-                                                        <Figure.Image
+                                                         <Image
                                                             width={35}
                                                             height={35}
-                                                            alt="profile"
                                                             roundedCircle
-                                                            className="mb-0"
-                                                            src={user?.photoURL}
+                                                            src={`${user?.photoURL}`}
                                                         />
                                                     </OverlayTrigger>
                                                 ) : (
