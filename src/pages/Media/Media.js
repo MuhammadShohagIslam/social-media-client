@@ -7,6 +7,7 @@ import { Spinner } from "react-bootstrap";
 import { getAllLikePosts } from "../../api/likePosts";
 import { getAllComments } from "../../api/comments";
 import DisplayError from "./../DisplayError/DisplayError";
+import { Helmet } from "react-helmet-async";
 
 const Media = () => {
     const { status, data, error } = useQuery({
@@ -63,6 +64,9 @@ const Media = () => {
     }
     return (
         <MediaLayout>
+            <Helmet>
+                <title>Media</title>
+            </Helmet>
             {status === "loading" ||
             allLikedPostsStatus === "loading" ||
             allCommentsStatus === "loading" ? (

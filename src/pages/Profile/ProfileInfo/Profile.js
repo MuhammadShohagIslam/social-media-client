@@ -10,6 +10,7 @@ import axios from "axios";
 import { createOrUpdateUser, getUser } from "./../../../api/user";
 import { useQuery } from "@tanstack/react-query";
 import DisplayError from "./../../DisplayError/DisplayError";
+import { Helmet } from "react-helmet-async";
 
 const Profile = () => {
     const [showModal, setShowModal] = useState(false);
@@ -149,6 +150,9 @@ const Profile = () => {
     }
     return (
         <ProfileLayout>
+            <Helmet>
+                <title>Profile</title>
+            </Helmet>
             <div className={classes.profileWrapper}>
                 <div>
                     <Container className="py-2 ps-4 ps-md-0 ps-lg-4">
