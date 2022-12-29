@@ -8,7 +8,6 @@
 }
 .commentCardBodyWrapper{
     display: flex;
-    justify-content: start;
 }
 .commentImg{
     width: 32px;

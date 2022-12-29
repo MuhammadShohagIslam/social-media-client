@@ -22,7 +22,7 @@ const MessageLayout = ({ children }) => {
                             className={classes.previewPostCrossIcon}
                             onClick={handleOpenMenu}
                         >
-                            {openLeftSideBar ? "X" : <AiOutlineBars />}
+                            {openLeftSideBar ? "X" : <AiOutlineBars className="mb-1"/>}
                         </span>
                     </div>
                     {openLeftSideBar && <MediaLeftSideBar />}

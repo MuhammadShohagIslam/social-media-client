@@ -42,7 +42,7 @@ const DisplayError = ({message}) => {
                     <Link to="/login" className={classes.fourOrFourLink}>
                         Login
                     </Link>
-                    Back In
+                    {" "}Back In
                 </h2>
             </div>
         </>

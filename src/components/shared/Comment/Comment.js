@@ -1,8 +1,8 @@
 import React from "react";
+import moment from "moment";
 import { Card, Image } from "react-bootstrap";
 import { FaUserAlt } from "react-icons/fa";
 import classes from "./Comment.module.css";
-import moment from "moment";
 
 const Comment = ({ comment }) => {
     const {
@@ -13,7 +13,7 @@ const Comment = ({ comment }) => {
         commentedAt,
     } = comment;
     return (
-        <Card className={`${classes.commentCardWrapper}`}>
+        <Card className={classes.commentCardWrapper}>
             <Card.Body className={classes.commentCardBodyWrapper}>
                 <div>
                     {commentedUserImage ? (

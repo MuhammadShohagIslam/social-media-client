@@ -23,6 +23,7 @@
     color: #d76826 !important;
     font-weight: 700;
     font-style: italic;
+    cursor: pointer;
 }
 /* Start Small Devices */
 @media only screen and (max-width: 767px) {
