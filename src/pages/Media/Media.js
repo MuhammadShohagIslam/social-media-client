@@ -77,7 +77,7 @@ const Media = () => {
                     <Spinner animation="border" className="spinner-color" />
                 </div>
             ) : (
-                <>
+                <section className="mb-4">
                     {data.length > 0 ? (
                         <>
                             {data.map((post) => (
@@ -95,7 +95,7 @@ const Media = () => {
                             There is no post
                         </h3>
                     )}
-                </>
+                </section>
             )}
         </MediaLayout>
     );

@@ -90,6 +90,9 @@ const Profile = () => {
                 .catch((err) => {
                     console.log(err.message);
                     setSubmitLoading(false);
+                })
+                .finally(() => {
+                    setLoading(false);
                 });
         } else {
             const profileObjectData = {
@@ -113,6 +116,9 @@ const Profile = () => {
                 .catch((error) => {
                     setSubmitLoading(false);
                     console.log(error.message);
+                })
+                .finally(() => {
+                    setLoading(false);
                 });
         }
     };
@@ -128,9 +134,6 @@ const Profile = () => {
             })
             .catch((error) => {
                 toast.error(error);
-                setLoading(false);
-            })
-            .finally(() => {
                 setLoading(false);
             });
     };

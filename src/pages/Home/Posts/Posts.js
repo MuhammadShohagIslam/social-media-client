@@ -176,7 +176,7 @@ const Posts = () => {
                     </Row>
                 </Container>
             </section>
-            <section>
+            <section className="mb-4">
                 <Container>
                     <SectionTitle
                         title="Popular Post"

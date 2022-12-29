@@ -10,7 +10,7 @@ const Messages = () => {
             <Helmet>
                 <title>Message</title>
             </Helmet>
-            <Container>
+            <Container className="mb-4">
                 <Message />
                 <Message />
                 <Message />
