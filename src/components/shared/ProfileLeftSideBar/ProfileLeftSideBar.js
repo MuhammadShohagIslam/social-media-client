@@ -1,7 +1,6 @@
 import React from "react";
 import { Nav, Image } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { Figure } from "react-bootstrap";
 import { FaUserAlt } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { ImBlogger } from "react-icons/im";
@@ -28,7 +27,7 @@ const ProfileLeftSideBar = () => {
                 )}
 
                 <h5 className="text-center text-white mt-2">
-                    Muhammad Jhohirul Islam
+                    {user?.displayName}
                 </h5>
             </li>
             <li className="mb-3">

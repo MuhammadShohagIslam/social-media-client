@@ -75,7 +75,7 @@ const Posts = () => {
         }
         // validation
         if (!postContent) {
-            return toast.error("Please Some Content of Post!");
+            return toast.error("Please Write Some Content of Post!");
         }
 
         if (postImage) {
