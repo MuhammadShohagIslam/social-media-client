@@ -7,6 +7,9 @@ import Media from "./pages/Media/Media";
 import Messages from "./pages/Messages/Messages";
 import Registration from "./pages/Registration/Registration";
 import Profile from './pages/Profile/ProfileInfo/Profile';
+import TermCondition from './pages/TermCondition/TermCondition';
+import NotFound from './pages/NotFound/NotFound';
+import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy';
 
 
 
@@ -22,6 +25,9 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Registration />} />
+                <Route path="/term-condition" element={<TermCondition />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </>
     );
