@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Container, Col, Row, Spinner } from "react-bootstrap";
+import { Container, Col, Row, ListGroup } from "react-bootstrap";
 import { useAuth } from "../../../contexts/AuthProvider/AuthProvider";
 import { toast } from "react-hot-toast";
 import { BiEdit } from "react-icons/bi";
@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 const Profile = () => {
     const [showModal, setShowModal] = useState(false);
     const [submitLoading, setSubmitLoading] = useState(false);
-    const { user, setLoading, userProfileUpdate, logOut } = useAuth();
+    const { user, setLoading, userProfileUpdate, logOut, setUser } = useAuth();
     const navigate = useNavigate();
     const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgdb_key}`;
 
@@ -30,7 +30,7 @@ const Profile = () => {
         error,
         refetch,
     } = useQuery({
-        queryKey: ["singleUser", user?.email, user?.displayName],
+        queryKey: ["singleUser"],
         queryFn: async () => {
             const data = await getUser(user?.email, user?.displayName);
             return data.data;
@@ -41,7 +41,7 @@ const Profile = () => {
         setShowModal((prev) => !prev);
     };
 
-    const handleSubmit = (event, setProfileImages) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
 
         const form = event.target;
@@ -55,7 +55,6 @@ const Profile = () => {
             const formData = new FormData();
             formData.append("image", photoImage);
             setSubmitLoading(true);
-
             axios
                 .post(url, formData)
                 .then((imgData) => {
@@ -64,7 +63,7 @@ const Profile = () => {
                         userId: userData?._id,
                         name: fullName || user?.displayName,
                         email: user?.email || email,
-                        profileImgUrl: user?.photoURL || profileImgUrl,
+                        profileImgUrl: profileImgUrl || user?.photoURL,
                         address: address || null,
                         university: university || null,
                     };
@@ -78,7 +77,6 @@ const Profile = () => {
                             );
                             refetch();
                             form.reset();
-                            setProfileImages(null);
                             setSubmitLoading(false);
                             setShowModal(false);
                         })
@@ -106,10 +104,12 @@ const Profile = () => {
             createOrUpdateUser(profileObjectData)
                 .then((data) => {
                     toast.success("User Profile Is Updated!");
-                    profileUpdate(profileObjectData.name, "");
-                    refetch();
+                    profileUpdate(
+                        profileObjectData.name,
+                        profileObjectData.photoURL
+                    );
                     form.reset();
-                    setProfileImages(null);
+                    refetch();
                     setSubmitLoading(false);
                     setShowModal(false);
                 })
@@ -130,6 +130,7 @@ const Profile = () => {
         };
         userProfileUpdate(profile)
             .then((result) => {
+                setUser(user);
                 setLoading(false);
             })
             .catch((error) => {
@@ -137,17 +138,6 @@ const Profile = () => {
                 setLoading(false);
             });
     };
-
-    if (status === "loading") {
-        return (
-            <div
-                style={{ height: "350px" }}
-                className="d-flex justify-content-center align-items-center"
-            >
-                <Spinner animation="border" className="spinner-color" />
-            </div>
-        );
-    }
 
     const handleLogOut = () => {
         logOut()
@@ -160,7 +150,7 @@ const Profile = () => {
     };
 
     if (status === "error") {
-        if (error.response.status === 403) {
+        if (error.response.status === 403 || error.response.status === 401) {
             handleLogOut();
         } else {
             <DisplayError message={error.message} />;
@@ -189,76 +179,56 @@ const Profile = () => {
                                 />
                             </div>
                         </div>
-                        <Row>
+                        <Row className="mt-3">
                             <Col lg={7}>
-                                <Form>
-                                    <Form.Group
-                                        className="mb-3"
-                                        controlId="formBasicEmail"
+                                <ListGroup as="ol">
+                                    <ListGroup.Item
+                                        as="li"
+                                        className="d-flex justify-content-between align-items-start"
                                     >
-                                        <Form.Label className="text-black">
-                                            FullName
-                                        </Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            disabled
-                                            name="fullName"
-                                            defaultValue={
-                                                user?.displayName ||
-                                                userData?.name
-                                            }
-                                            placeholder="Enter Full Name"
-                                        />
-                                    </Form.Group>
-                                    <Form.Group
-                                        className="mb-3"
-                                        controlId="formBasicEmail"
+                                        <div className="ms-2 me-auto">
+                                            <div className="fw-bold">Email</div>
+                                        </div>
+                                        <div>
+                                            {user?.email || userData?.email || "None"}
+                                        </div>
+                                    </ListGroup.Item>
+                                    <ListGroup.Item
+                                        as="li"
+                                        className="d-flex justify-content-between align-items-start"
                                     >
-                                        <Form.Label className="text-black">
-                                            Email address
-                                        </Form.Label>
-                                        <Form.Control
-                                            name="email"
-                                            type="email"
-                                            disabled
-                                            defaultValue={
-                                                user?.email || userData?.email
-                                            }
-                                            placeholder="Enter Email"
-                                        />
-                                    </Form.Group>
-
-                                    <Form.Group
-                                        className="mb-3"
-                                        controlId="formBasicAddress"
+                                        <div className="ms-2 me-auto">
+                                            <div className="fw-bold">Full Name</div>
+                                        </div>
+                                        <div>
+                                            {userData?.name || "None"}
+                                        </div>
+                                    </ListGroup.Item>
+                                    <ListGroup.Item
+                                        as="li"
+                                        className="d-flex justify-content-between align-items-start"
                                     >
-                                        <Form.Label className="text-black">
-                                            Address
-                                        </Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            name="address"
-                                            disabled
-                                            defaultValue={userData?.address}
-                                            placeholder="Enter Your Address"
-                                        />
-                                    </Form.Group>
-                                    <Form.Group
-                                        className="mb-3"
-                                        controlId="formBasicUniversity"
+                                        <div className="ms-2 me-auto">
+                                            <div className="fw-bold">Address</div>
+                                        </div>
+                                        <div>
+                                            {userData?.address || "None"}
+                                        </div>
+                                    </ListGroup.Item>
+                                    <ListGroup.Item
+                                        as="li"
+                                        className="d-flex justify-content-between align-items-start"
                                     >
-                                        <Form.Label className="text-black">
-                                            University
-                                        </Form.Label>
-                                        <Form.Control
-                                            disabled
-                                            type="text"
-                                            name="university"
-                                            defaultValue={userData?.university}
-                                            placeholder="Enter Your University"
-                                        />
-                                    </Form.Group>
-                                </Form>
+                                        <div className="ms-2 me-auto">
+                                            <div className="fw-bold">University</div>
+                                        </div>
+                                        <div>
+                                            {userData?.university || "None"}
+                                        </div>
+                                    </ListGroup.Item>
+                                   
+                                   
+                                </ListGroup>
                             </Col>
                         </Row>
                     </Container>

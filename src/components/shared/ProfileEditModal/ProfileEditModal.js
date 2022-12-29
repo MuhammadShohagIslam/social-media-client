@@ -12,24 +12,23 @@ const ProfileEditModal = ({
     user,
     submitLoading,
 }) => {
-    const [profileImages, setProfileImages] = useState(null);
+    const [profileImages, setProfileImages] = useState();
     const profileImageRef = useRef();
 
     const handleImageChange = (e) => {
         if (e.target.files && e.target.files[0]) {
             const image = e.target.files[0];
-            setProfileImages({
-                profileImage: URL.createObjectURL(image),
-            });
+            setProfileImages(URL.createObjectURL(image));
         }
     };
+    console.log(profileImages);
     return (
         <Modal show={showModal} onHide={() => setShowModal(!showModal)}>
             <Modal.Header closeButton>
                 <Modal.Title>{modalName}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form onSubmit={(e) => handleSubmit(e, setProfileImages)}>
+                <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label className="text-black">
                             Email address
@@ -63,7 +62,7 @@ const ProfileEditModal = ({
                                 </span>
                                 <img
                                     className={classes.previewPostImage}
-                                    src={profileImages.profileImage}
+                                    src={profileImages}
                                     alt=""
                                 />
                             </div>

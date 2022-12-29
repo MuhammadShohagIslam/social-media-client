@@ -108,8 +108,8 @@ const Post = ({ post, allLikedPosts, refetch, allComments, refetchPost }) => {
                 </Card.Header>
                 <Card.Body>
                     <Card.Text className={classes.cardContent}>
-                        {content.length > 100
-                            ? `${content.slice(0, 100)} ...`
+                        {content.length > 400
+                            ? `${content.slice(0, 400)} ...`
                             : content}
                         <Link
                             className={classes.cardContentDetails}

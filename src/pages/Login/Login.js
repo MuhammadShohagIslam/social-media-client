@@ -7,7 +7,7 @@ import { FaGoogle } from "react-icons/fa";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthProvider/AuthProvider";
 import Main from "../../Layout/Main/Main";
-import { createJwtToken } from "./../../api/user";
+import { createJwtToken, createNewUser } from "./../../api/user";
 
 const Login = () => {
     const {
@@ -79,6 +79,7 @@ const Login = () => {
                 };
                 createJwtToken(currentUserData).then((res) => {
                     const data = res.data;
+                    saveNewUserToDb(currentUserData);
                     localStorage.setItem("ShohagCSM-token", `Bearer ${data.token}`);
                     navigate(from, { replace: true });
                 });
@@ -88,6 +89,14 @@ const Login = () => {
             })
             .finally(() => {
                 setLoading(false);
+            });
+    };
+
+    const saveNewUserToDb = (userData) => {
+        createNewUser(userData)
+            .then((data) => {})
+            .catch((error) => {
+                console.log(error.message);
             });
     };
 

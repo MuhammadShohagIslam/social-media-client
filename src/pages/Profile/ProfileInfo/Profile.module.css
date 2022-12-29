@@ -19,3 +19,33 @@
     width: 40%;
     cursor: pointer;
 }
+
+/* Start Small Devices */
+@media only screen and (max-width: 767px) {
+    .profileInformationWrapper{
+        justify-content: space-between;
+    }
+    .profileInformationTitle{
+        font-size: 23px;
+    }
+    .profileInformationIconWrapper{
+        width: 11%;
+    }
+} /* End Small Devices */
+
+/* Start Medium Devices */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .profileInformationWrapper{
+        justify-content: space-between;
+    }
+    .profileInformationIconWrapper{
+        width: 4%;
+    }
+} /* End Medium Devices */
+
+/* Start Large Devices */
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+    .notFoundPageWrapper {
+        height: 300px;
+    }
+} /* End Large Devices */

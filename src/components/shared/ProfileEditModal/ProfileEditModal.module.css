@@ -27,11 +27,11 @@
     cursor: pointer;
 }
 .previewPostImageWrapper {
-    height: 150px;
+    height: 200px;
     overflow: hidden;
     position: relative;
     margin-bottom: 5px;
-    width: 228px;
+    width: 194px;
 }
 .previewPostCrossIcon {
     position: absolute;

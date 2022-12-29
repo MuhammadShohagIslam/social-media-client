@@ -56,10 +56,12 @@ const Registration = () => {
                         timer: 2500,
                     });
                     navigate("/");
+                    setLoading(false);
                 });
             })
             .catch((error) => {
                 toast.error(error.message.split("Firebase: ").join(""));
+                setLoading(false);
             })
             .finally(() => {
                 setLoading(false);
@@ -72,10 +74,15 @@ const Registration = () => {
             photoURL,
         };
         userProfileUpdate(profile)
-            .then((result) => {})
+            .then((result) => {
+                setLoading(false);
+            })
             .catch((error) => {
                 toast.error(error.message);
-            });
+                setLoading(false);
+            }).finally(() => {
+                setLoading(false);
+            });;
     };
 
     const saveNewUserToDb = (userData) => {

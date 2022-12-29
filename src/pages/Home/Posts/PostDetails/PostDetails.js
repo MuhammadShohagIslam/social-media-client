@@ -23,7 +23,7 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { createNewComment, getAllComments } from "./../../../../api/comments";
 import DisplayError from "./../../../DisplayError/DisplayError";
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from "react-helmet-async";
 import {
     getAllLikePosts,
     removedLikedPost,
@@ -33,6 +33,7 @@ import {
 const PostDetails = () => {
     const [post, setPost] = useState({});
     const [loading, setLoading] = useState(false);
+    const [loadingPost, setLoadingPost] = useState(false);
     const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgdb_key}`;
     const { postId } = useParams();
     const navigate = useNavigate();
@@ -44,14 +45,20 @@ const PostDetails = () => {
     }, []);
 
     useEffect(() => {
-        if (postId) {
-            const loadingPost = async () => {
-                const response = await getPostByPostId(postId);
-                const data = await response.data;
-                console.log(postId);
-                setPost(data);
-            };
-            loadingPost();
+        try {
+            if (postId) {
+                setLoadingPost(true);
+                const loadingPost = async () => {
+                    const response = await getPostByPostId(postId);
+                    const data = await response.data;
+                    setPost(data);
+                    setLoadingPost(false);
+                };
+                loadingPost();
+            }
+        } catch (error) {
+            setLoadingPost(false);
+            console.log(error.message);
         }
     }, [postId]);
 
@@ -217,17 +224,6 @@ const PostDetails = () => {
         }
     };
 
-    if (allCommentsStatus === "loading" || allLikedPostsStatus === "loading") {
-        return (
-            <div
-                style={{ height: "350px" }}
-                className="d-flex justify-content-center align-items-center"
-            >
-                <Spinner animation="border" className="spinner-color" />
-            </div>
-        );
-    }
-
     const commentArrayByPostId =
         allComments &&
         allComments.filter((comment) => comment.postId === postId);
@@ -235,192 +231,213 @@ const PostDetails = () => {
     if (allLikedPostsError === "error" || allCommentsError === "error") {
         return (
             <DisplayError
-                message={allLikedPostsError?.message || allCommentsError?.message}
+                message={
+                    allLikedPostsError?.message || allCommentsError?.message
+                }
             />
         );
     }
     return (
         <MediaLayout>
-             <Helmet>
+            <Helmet>
                 <title>Post-Details</title>
             </Helmet>
-            <Container>
-                <Card className={classes.cardWrapper}>
-                    <Card.Header className={classes.cardHeaderWrapper}>
-                        <div>
-                            {post?.postedUserImage ? (
-                                <Image
-                                    className={classes.cardHeaderImg}
-                                    roundedCircle
-                                    src={post?.postedUserImage}
-                                />
-                            ) : (
-                                <span className={classes.cardHeaderImg}>
-                                    <FaUserAlt className="text-black fs-5" />
-                                </span>
-                            )}
-                        </div>
-                        <div>
-                            <h2 className={classes.cardHeaderName}>
-                                {post?.postedName}
-                            </h2>
-                            <p className={classes.cardHeaderPostCreatedAt}>
-                                {moment(post?.postedAt).fromNow()}
-                            </p>
-                        </div>
-                    </Card.Header>
-                    <Card.Body>
-                        <Card.Text className={classes.cardContent}>
-                            {post?.content?.length > 100
-                                ? `${post?.content?.slice(0, 100)} ...`
-                                : post?.content}
-                        </Card.Text>
-                    </Card.Body>
-                    <div className={classes.cardImageWrapper}>
-                        <Card.Img
-                            className={classes.cardMainImage}
-                            variant="bottom"
-                            src={post?.image && post?.image}
-                        />
-                    </div>
-                    <Card.Footer className={classes.cardFooterWrapper}>
-                        <div className={classes.cardFooterTopWrapper}>
-                            <div className={classes.cardFooterIconWrapper}>
-                                <AiFillLike
-                                    className={classes.cardFooterLikedIcon}
-                                />
-                                {likedPostArrayByUserName.length > 0 ? (
-                                    <>
-                                        You
-                                        {likedPostArrayByPostId.length > 1
-                                            ? ` and ${
-                                                  likedPostArrayByPostId.length -
-                                                  1
-                                              } Others`
-                                            : ""}
-                                    </>
+            {loadingPost ||
+            allCommentsStatus === "loading" ||
+            allLikedPostsStatus === "loading" ? (
+                <div
+                    style={{ height: "350px" }}
+                    className="d-flex justify-content-center align-items-center"
+                >
+                    <Spinner animation="border" className="spinner-color" />
+                </div>
+            ) : (
+                <Container>
+                    <Card className={classes.cardWrapper}>
+                        <Card.Header className={classes.cardHeaderWrapper}>
+                            <div>
+                                {post?.postedUserImage ? (
+                                    <Image
+                                        className={classes.cardHeaderImg}
+                                        roundedCircle
+                                        src={post?.postedUserImage}
+                                    />
                                 ) : (
-                                    <>
-                                        {likedPostArrayByPostId.length > 0
-                                            ? likedPostArrayByPostId.length
-                                            : 0}{" "}
-                                        {likedPostArrayByPostId.length > 0
-                                            ? "Likes"
-                                            : "Like"}
-                                    </>
+                                    <span className={classes.cardHeaderImg}>
+                                        <FaUserAlt className="text-black fs-5" />
+                                    </span>
                                 )}
                             </div>
-                            <div
-                                className={
-                                    classes.cardFooterCounterCommentShared
-                                }
-                            >
-                                <p className={classes.cardFooterCounterComment}>
-                                    {commentArrayByPostId &&
-                                    commentArrayByPostId.length > 0
-                                        ? commentArrayByPostId.length
-                                        : 0}{" "}
-                                    {commentArrayByPostId.length > 0
-                                        ? "comments"
-                                        : "comment"}
-                                </p>
-                                <p className={classes.cardFooterCounterShared}>
-                                    2 shared
+                            <div>
+                                <h2 className={classes.cardHeaderName}>
+                                    {post?.postedName}
+                                </h2>
+                                <p className={classes.cardHeaderPostCreatedAt}>
+                                    {moment(post?.postedAt).fromNow()}
                                 </p>
                             </div>
+                        </Card.Header>
+                        <Card.Body>
+                            <Card.Text className={classes.cardContent}>
+                                {post?.content}
+                            </Card.Text>
+                        </Card.Body>
+                        <div className={classes.cardImageWrapper}>
+                            <Card.Img
+                                className={classes.cardMainImage}
+                                variant="bottom"
+                                src={post?.image && post?.image}
+                            />
                         </div>
-                        <div className={classes.cardFooterBottomWrapper}>
-                            <OverlayTrigger
-                                placement="top"
-                                overlay={
-                                    <Tooltip id={`tooltip-top`}>
-                                        {!user && !user?.uid
-                                            ? "Login To Like"
-                                            : likedPostArrayByUserName.length >
-                                              0
-                                            ? "Already Like"
-                                            : "Like"}
-                                    </Tooltip>
-                                }
-                            >
+                        <Card.Footer className={classes.cardFooterWrapper}>
+                            <div className={classes.cardFooterTopWrapper}>
+                                <div className={classes.cardFooterIconWrapper}>
+                                    <AiFillLike
+                                        className={classes.cardFooterLikedIcon}
+                                    />
+                                    {likedPostArrayByUserName.length > 0 ? (
+                                        <>
+                                            You
+                                            {likedPostArrayByPostId.length > 1
+                                                ? ` and ${
+                                                      likedPostArrayByPostId.length -
+                                                      1
+                                                  } Others`
+                                                : ""}
+                                        </>
+                                    ) : (
+                                        <>
+                                            {likedPostArrayByPostId.length > 0
+                                                ? likedPostArrayByPostId.length
+                                                : 0}{" "}
+                                            {likedPostArrayByPostId.length > 0
+                                                ? "Likes"
+                                                : "Like"}
+                                        </>
+                                    )}
+                                </div>
+                                <div
+                                    className={
+                                        classes.cardFooterCounterCommentShared
+                                    }
+                                >
+                                    <p
+                                        className={
+                                            classes.cardFooterCounterComment
+                                        }
+                                    >
+                                        {commentArrayByPostId &&
+                                        commentArrayByPostId.length > 0
+                                            ? commentArrayByPostId.length
+                                            : 0}{" "}
+                                        {commentArrayByPostId.length > 0
+                                            ? "comments"
+                                            : "comment"}
+                                    </p>
+                                    <p
+                                        className={
+                                            classes.cardFooterCounterShared
+                                        }
+                                    >
+                                        2 shared
+                                    </p>
+                                </div>
+                            </div>
+                            <div className={classes.cardFooterBottomWrapper}>
+                                <OverlayTrigger
+                                    placement="top"
+                                    overlay={
+                                        <Tooltip id={`tooltip-top`}>
+                                            {!user && !user?.uid
+                                                ? "Login To Like"
+                                                : likedPostArrayByUserName.length >
+                                                  0
+                                                ? "Already Like"
+                                                : "Like"}
+                                        </Tooltip>
+                                    }
+                                >
+                                    <div
+                                        className={
+                                            classes.cardFooterBottomIconWrapper
+                                        }
+                                        onClick={() =>
+                                            handleLikedThePost(
+                                                postId,
+                                                isLikedPostsArrayList
+                                            )
+                                        }
+                                    >
+                                        {isLikedPostsArrayList ? (
+                                            <AiFillLike
+                                                className={
+                                                    classes.cardFooterBottomLikedIcon
+                                                }
+                                            />
+                                        ) : (
+                                            <AiFillLike
+                                                className={
+                                                    classes.cardFooterBottomUnLikedIcon
+                                                }
+                                            />
+                                        )}
+                                        Like
+                                    </div>
+                                </OverlayTrigger>
                                 <div
                                     className={
                                         classes.cardFooterBottomIconWrapper
                                     }
-                                    onClick={() =>
-                                        handleLikedThePost(
-                                            postId,
-                                            isLikedPostsArrayList
-                                        )
-                                    }
                                 >
-                                    {isLikedPostsArrayList ? (
-                                        <AiFillLike
-                                            className={
-                                                classes.cardFooterBottomLikedIcon
-                                            }
-                                        />
-                                    ) : (
-                                        <AiFillLike
-                                            className={
-                                                classes.cardFooterBottomUnLikedIcon
-                                            }
-                                        />
-                                    )}
-                                    Like
+                                    <IoIosShareAlt
+                                        className={
+                                            classes.cardFooterBottomSharedIcon
+                                        }
+                                    />
+                                    Share
                                 </div>
-                            </OverlayTrigger>
-                            <div
-                                className={classes.cardFooterBottomIconWrapper}
-                            >
-                                <IoIosShareAlt
-                                    className={
-                                        classes.cardFooterBottomSharedIcon
-                                    }
-                                />
-                                Share
+                            </div>
+                        </Card.Footer>
+
+                        <div className="mt-3">
+                            <h4 className="text-center mb-4">
+                                Comment To Post Here!
+                            </h4>
+                            <CreateComment
+                                user={user}
+                                handleCommentThePost={handleCommentThePost}
+                                loading={loading}
+                            />
+                        </div>
+                        <hr />
+                        <div>
+                            <h4 className="ms-4 mt-3">
+                                {commentArrayByPostId &&
+                                commentArrayByPostId.length > 0
+                                    ? `Comments(${commentArrayByPostId.length})`
+                                    : `Comments(0)`}
+                            </h4>
+                            <div>
+                                {commentArrayByPostId &&
+                                commentArrayByPostId.length > 0 ? (
+                                    <>
+                                        {commentArrayByPostId.map((comment) => (
+                                            <Comment
+                                                comment={comment}
+                                                key={comment._id}
+                                            />
+                                        ))}
+                                    </>
+                                ) : (
+                                    <h5 className="text-center text-dark mb-5">
+                                        There is no comment
+                                    </h5>
+                                )}
                             </div>
                         </div>
-                    </Card.Footer>
-
-                    <div className="mt-3">
-                        <h4 className="text-center mb-4">
-                            Comment To Post Here!
-                        </h4>
-                        <CreateComment
-                            user={user}
-                            handleCommentThePost={handleCommentThePost}
-                            loading={loading}
-                        />
-                    </div>
-                    <hr />
-                    <div>
-                        <h4 className="ms-4 mt-3">
-                            {commentArrayByPostId &&
-                            commentArrayByPostId.length > 0
-                                ? `Comments(${commentArrayByPostId.length})`
-                                : `Comments(0)`}
-                        </h4>
-                        <div>
-                            {commentArrayByPostId &&
-                            commentArrayByPostId.length > 0 ? (
-                                <>
-                                    {commentArrayByPostId.map((comment) => (
-                                        <Comment
-                                            comment={comment}
-                                            key={comment._id}
-                                        />
-                                    ))}
-                                </>
-                            ) : (
-                                <h5 className="text-center text-dark mb-5">
-                                    There is no comment
-                                </h5>
-                            )}
-                        </div>
-                    </div>
-                </Card>
-            </Container>
+                    </Card>
+                </Container>
+            )}
         </MediaLayout>
     );
 };
