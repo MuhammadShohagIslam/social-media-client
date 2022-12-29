@@ -11,12 +11,13 @@ import { createOrUpdateUser, getUser } from "./../../../api/user";
 import { useQuery } from "@tanstack/react-query";
 import DisplayError from "./../../DisplayError/DisplayError";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
     const [showModal, setShowModal] = useState(false);
     const [submitLoading, setSubmitLoading] = useState(false);
-    const { user, setLoading, userProfileUpdate } = useAuth();
-
+    const { user, setLoading, userProfileUpdate, logOut } = useAuth();
+    const navigate = useNavigate();
     const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgdb_key}`;
 
     useEffect(() => {
@@ -145,8 +146,22 @@ const Profile = () => {
         );
     }
 
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                navigate("/login");
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
+    };
+
     if (status === "error") {
-        return <DisplayError message={error?.message} />;
+        if (error.response.status === 403) {
+            handleLogOut();
+        } else {
+            <DisplayError message={error.message} />;
+        }
     }
     return (
         <ProfileLayout>

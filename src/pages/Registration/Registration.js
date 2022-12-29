@@ -46,7 +46,7 @@ const Registration = () => {
                     const data = res.data;
                     handleProfileUpdate(userName, "");
                     saveNewUserToDb(currentUserData);
-                    localStorage.setItem("ShohagCSM-token", data.token);
+                    localStorage.setItem("ShohagCSM-token", `Bearer ${data.token}`);
                     form.reset();
                     Swal.fire({
                         position: "top",
@@ -101,7 +101,7 @@ const Registration = () => {
                         <Form onSubmit={handleSubmit}>
                             <Form.Group className="mb-3" controlId="userName">
                                 <Form.Label className="text-white">
-                                    User Name
+                                    UserName
                                 </Form.Label>
                                 <Form.Control
                                     name="userName"
@@ -116,7 +116,7 @@ const Registration = () => {
                                 <Form.Control
                                     name="email"
                                     type="email"
-                                    placeholder="Enter Email"
+                                    placeholder="Enter Your Email"
                                 />
                             </Form.Group>
 
@@ -127,7 +127,7 @@ const Registration = () => {
                                 <Form.Control
                                     name="password"
                                     type="password"
-                                    placeholder="Password"
+                                    placeholder="Enter Your Password"
                                 />
                             </Form.Group>
                             <Form.Group

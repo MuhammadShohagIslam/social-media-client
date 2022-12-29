@@ -23,6 +23,7 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { createNewComment, getAllComments } from "./../../../../api/comments";
 import DisplayError from "./../../../DisplayError/DisplayError";
+import { Helmet } from 'react-helmet-async';
 import {
     getAllLikePosts,
     removedLikedPost,
@@ -240,6 +241,9 @@ const PostDetails = () => {
     }
     return (
         <MediaLayout>
+             <Helmet>
+                <title>Post-Details</title>
+            </Helmet>
             <Container>
                 <Card className={classes.cardWrapper}>
                     <Card.Header className={classes.cardHeaderWrapper}>

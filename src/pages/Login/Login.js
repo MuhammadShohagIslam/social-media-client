@@ -4,7 +4,7 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthProvider/AuthProvider";
 import Main from "../../Layout/Main/Main";
 import { createJwtToken } from "./../../api/user";
@@ -18,6 +18,8 @@ const Login = () => {
     } = useAuth();
     const googleProvider = new GoogleAuthProvider();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -45,10 +47,10 @@ const Login = () => {
                 };
                 createJwtToken(currentUserData).then((res) => {
                     const data = res.data;
-                    localStorage.setItem("ShohagCSM-token", data.token);
+                    localStorage.setItem("ShohagCSM-token", `Bearer ${data.token}`);
                     form.reset();
                     toast.success("Login Successfully");
-                    navigate("/");
+                    navigate(from, { replace: true });
                 });
                 form.reset();
             })
@@ -77,8 +79,8 @@ const Login = () => {
                 };
                 createJwtToken(currentUserData).then((res) => {
                     const data = res.data;
-                    localStorage.setItem("ShohagCSM-token", data.token);
-                    navigate("/");
+                    localStorage.setItem("ShohagCSM-token", `Bearer ${data.token}`);
+                    navigate(from, { replace: true });
                 });
             })
             .catch((error) => {

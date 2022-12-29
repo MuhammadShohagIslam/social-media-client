@@ -19,7 +19,12 @@ export const createNewUser = async (userData) => {
 // get single user
 export const getUser = async (email, name) => {
     return await axios.get(
-        `${process.env.REACT_APP_server_api}/users?email=${email}&name=${name}`
+        `${process.env.REACT_APP_server_api}/users?email=${email}&name=${name}`,
+        {
+            headers: {
+                authorization: `${localStorage.getItem("ShohagCSM-token")}`,
+            },
+        }
     );
 };
 
