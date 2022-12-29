@@ -13,6 +13,7 @@ import { createNewPost } from "./../../../api/posts";
 import { useAuth } from "./../../../contexts/AuthProvider/AuthProvider";
 import { getAllLikePosts } from "../../../api/likePosts";
 import { getAllComments } from "../../../api/comments";
+import DisplayError from "../../DisplayError/DisplayError";
 
 const Posts = () => {
     const [loading, setLoading] = useState(false);
@@ -145,7 +146,15 @@ const Posts = () => {
         allLikedPostsError === "error" ||
         allCommentsError === "error"
     ) {
-        return <span>Error: {error.message}</span>;
+        return (
+            <DisplayError
+                message={
+                    error?.message ||
+                    allLikedPostsError?.message ||
+                    allCommentsError?.message
+                }
+            />
+        );
     }
 
     return (

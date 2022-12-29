@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Container, Col, Row } from "react-bootstrap";
+import { Form, Container, Col, Row, Spinner } from "react-bootstrap";
 import { useAuth } from "../../../contexts/AuthProvider/AuthProvider";
 import { toast } from "react-hot-toast";
 import { BiEdit } from "react-icons/bi";
@@ -9,6 +9,7 @@ import ProfileLayout from "../../../Layout/ProfileLayout/ProfileLayout";
 import axios from "axios";
 import { createOrUpdateUser, getUser } from "./../../../api/user";
 import { useQuery } from "@tanstack/react-query";
+import DisplayError from "./../../DisplayError/DisplayError";
 
 const Profile = () => {
     const [showModal, setShowModal] = useState(false);
@@ -131,6 +132,21 @@ const Profile = () => {
                 setLoading(false);
             });
     };
+
+    if (status === "loading") {
+        return (
+            <div
+                style={{ height: "350px" }}
+                className="d-flex justify-content-center align-items-center"
+            >
+                <Spinner animation="border" className="spinner-color" />
+            </div>
+        );
+    }
+
+    if (status === "error") {
+        return <DisplayError message={error?.message} />;
+    }
     return (
         <ProfileLayout>
             <div className={classes.profileWrapper}>

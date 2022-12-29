@@ -6,6 +6,7 @@ import { getAllPosts } from "../../api/posts";
 import { Spinner } from "react-bootstrap";
 import { getAllLikePosts } from "../../api/likePosts";
 import { getAllComments } from "../../api/comments";
+import DisplayError from "./../DisplayError/DisplayError";
 
 const Media = () => {
     const { status, data, error } = useQuery({
@@ -50,7 +51,15 @@ const Media = () => {
         allLikedPostsError === "error" ||
         allCommentsError === "error"
     ) {
-        return <span>Error: {error.message}</span>;
+        return (
+            <DisplayError
+                message={
+                    error?.message ||
+                    allLikedPostsError?.message ||
+                    allCommentsError?.message
+                }
+            />
+        );
     }
     return (
         <MediaLayout>

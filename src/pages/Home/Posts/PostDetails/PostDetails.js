@@ -5,6 +5,7 @@ import {
     Container,
     OverlayTrigger,
     Tooltip,
+    Spinner,
 } from "react-bootstrap";
 import moment from "moment";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
@@ -21,6 +22,7 @@ import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { createNewComment, getAllComments } from "./../../../../api/comments";
+import DisplayError from "./../../../DisplayError/DisplayError";
 import {
     getAllLikePosts,
     removedLikedPost,
@@ -214,11 +216,28 @@ const PostDetails = () => {
         }
     };
 
+    if (allCommentsStatus === "loading" || allLikedPostsStatus === "loading") {
+        return (
+            <div
+                style={{ height: "350px" }}
+                className="d-flex justify-content-center align-items-center"
+            >
+                <Spinner animation="border" className="spinner-color" />
+            </div>
+        );
+    }
+
     const commentArrayByPostId =
         allComments &&
         allComments.filter((comment) => comment.postId === postId);
 
-    console.log(commentArrayByPostId);
+    if (allLikedPostsError === "error" || allCommentsError === "error") {
+        return (
+            <DisplayError
+                message={allLikedPostsError?.message || allCommentsError?.message}
+            />
+        );
+    }
     return (
         <MediaLayout>
             <Container>
