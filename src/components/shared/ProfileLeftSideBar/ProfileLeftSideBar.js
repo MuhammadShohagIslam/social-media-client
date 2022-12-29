@@ -44,7 +44,7 @@ const ProfileLeftSideBar = () => {
             <li className="mb-3">
                 <LinkContainer
                     className={classes.leftSideListItemWrapper}
-                    to="/userPost"
+                    to="/profile-posts"
                 >
                     <Nav.Link className={classes.navLink}>
                         <ImBlogger className={classes.leftSideProfileIcon} />
@@ -55,7 +55,7 @@ const ProfileLeftSideBar = () => {
             <li className="mb-3">
                 <LinkContainer
                     className={classes.leftSideListItemWrapper}
-                    to="/userGroup"
+                    to="/group"
                 >
                     <Nav.Link className={classes.navLink}>
                         <HiOutlineUserGroup
@@ -68,7 +68,7 @@ const ProfileLeftSideBar = () => {
             <li className="mb-3">
                 <LinkContainer
                     className={classes.leftSideListItemWrapper}
-                    to="/userRecentActivities"
+                    to="/recent-post"
                 >
                     <Nav.Link className={classes.navLink}>
                         <GiTimeSynchronization

@@ -11,6 +11,9 @@ import TermCondition from "./pages/TermCondition/TermCondition";
 import NotFound from "./pages/NotFound/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import PrivateRouter from "./routers/PrivateRouter/PrivateRouter";
+import Posts from "./pages/Profile/Posts/Posts";
+import Group from "./pages/Profile/Group/Group";
+import MostRecent from "./pages/Profile/MostRecent/MostRecent";
 
 function App() {
     return (
@@ -26,6 +29,30 @@ function App() {
                     element={
                         <PrivateRouter>
                             <Profile />
+                        </PrivateRouter>
+                    }
+                />
+                <Route
+                    path="/profile-posts"
+                    element={
+                        <PrivateRouter>
+                            <Posts />
+                        </PrivateRouter>
+                    }
+                />
+                <Route
+                    path="/group"
+                    element={
+                        <PrivateRouter>
+                            <Group />
+                        </PrivateRouter>
+                    }
+                />
+                <Route
+                    path="/recent-post"
+                    element={
+                        <PrivateRouter>
+                            <MostRecent />
                         </PrivateRouter>
                     }
                 />
