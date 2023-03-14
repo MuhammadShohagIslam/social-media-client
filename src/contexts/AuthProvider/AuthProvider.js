@@ -13,10 +13,12 @@ import {
 const AuthContext = createContext();
 const auth = getAuth(app);
 
+// make hook for Auth
 export const useAuth = () => {
     return useContext(AuthContext);
 };
 
+// creating authProvider
 const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
